@@ -137,7 +137,7 @@ const allLoveWords = [
     { word: "Wicked", message: "'You may be the High King, but I will always be wicked.' — Jude. We love people for who they truly are, darkness and all." },
     { word: "Ache", message: "'Being near you hurts. Being away from you hurts worse.' — Cardan to Jude. Love is a beautiful ache we choose to carry." },
     { word: "Eternal", message: "'Forever is a long time, but I will spend it with you.' — Cardan, The Queen of Nothing. Forever only matters with the right person." },
-    { word: "Hate", message: "'“Most of all, I hate you because I think of you. Often. It’s disgusting, and I can’t stop.” Cardan, The Cruel Prince" },
+    { word: "Hate", message: "'“Most of all, I hate you because I think of you. Often. It's disgusting, and I can't stop.” Cardan, The Cruel Prince" },
 
     { word: "Darkness", message: "'To the stars who listen and the dreams that are answered.' — Rhysand, ACOMAF. Even in darkness, hope remains." },
     { word: "Salvation", message: "'I would have let the world burn to keep you safe.' — Rhysand to Feyre. Love makes us capable of extraordinary things." },
