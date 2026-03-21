@@ -426,3 +426,30 @@
     animation: float 3s ease-in-out infinite;
     opacity: 0.6;
 }
+
+.streak-display {
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b81 100%);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.streak-display.high-streak {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
