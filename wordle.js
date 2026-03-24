@@ -13,6 +13,7 @@ const wordHints = {
     "TRUST": "Firm belief in the reliability of someone",
     "LONGING": "A yearning desire for something or someone",
     "JOY": "A feeling of great pleasure and happiness",
+    "SPIRIT": "The essence of a person",
     "HOPE": "A feeling of expectation for something positive",
     "SERENITY": "The state of being calm and peaceful",
     "BELONGING": "The feeling of being accepted and fitting in",
