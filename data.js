@@ -15,6 +15,7 @@ const allLoveWords = [
     { word: "Serenity", message: "Serenity is the peace that comes from knowing you are loved unconditionally." },
     { word: "Belonging", message: "'Belonging is the feeling of finally finding where you are meant to be.' — The Raven Boys, Maggie Stiefvater" },
     { word: "Cherish", message: "To cherish is to hold someone so dear that their happiness becomes your own." },
+    { word: "Spirit", message: "Tomorrow is a new day. Wake up and start it with a new spirit." },
     { word: "Enchantment", message: "'Enchantment is the magic woven into every moment spent with the one you love.' — Uprooted, Naomi Novik" },
     { word: "Whisper", message: "'A whisper of love can be louder than the noisiest crowd.' — The Cruel Prince, Holly Black" },
     { word: "Promise", message: "A promise is the thread that ties hearts together through time and distance." },
