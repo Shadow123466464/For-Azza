@@ -1,758 +1,408 @@
-class AvatarBuilder {
-    constructor() {
-        this.config = {
-            gender: 'girl',
-            skinTone: 'skin1',
-            hairStyle: 'medium',
-            hairColor: 'brown',
-            outfitStyle: 'casual',
-            outfitColor: 'pink',
-            glasses: 'none',
-            headAccessory: 'none',
-            faceFeature: 'none'
-        };
+function renderAvatar(containerId, config, size, animate) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+
+    var furColors = {
+        orange: '#f4a460',
+        brown: '#8B4513',
+        black: '#2d2d2d',
+        white: '#f5f5f5',
+        gray: '#808080',
+        cream: '#ffe4c4',
+        golden: '#daa520',
+        pink: '#ffb6c1',
+        blue: '#87ceeb',
+        purple: '#dda0dd'
+    };
+
+    var furColor = furColors[config.furColor] || furColors.orange;
+    var innerEarColor = config.furColor === 'white' || config.furColor === 'cream' ? '#ffb6c1' : '#ffcccb';
+    
+    var sizeClass = '';
+    if (size === 'mini') sizeClass = 'mini';
+    else if (size === 'small') sizeClass = 'small';
+
+    var avatar = document.createElement('div');
+    avatar.className = 'animal-avatar ' + sizeClass;
+    if (animate) {
+        avatar.classList.add('animated');
     }
 
-    setConfig(config) {
-        this.config = { ...this.config, ...config };
+    var earsHTML = '';
+    var muzzleHTML = '';
+    var noseClass = config.animalType;
+    var specialFeatures = '';
+
+    switch (config.animalType) {
+        case 'cat':
+            earsHTML = '<div class="animal-ears cat">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle" style="background: ' + lightenColor(furColor, 30) + '"></div>';
+            specialFeatures = '<div class="animal-whiskers">' +
+                '<div class="whisker-group left">' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '</div>' +
+                '<div class="whisker-group right">' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '</div>' +
+                '</div>';
+            break;
+        case 'dog':
+            earsHTML = '<div class="animal-ears dog">' +
+                '<div class="ear left" style="background: ' + darkenColor(furColor, 20) + '"></div>' +
+                '<div class="ear right" style="background: ' + darkenColor(furColor, 20) + '"></div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle" style="background: ' + lightenColor(furColor, 30) + '"></div>';
+            break;
+        case 'rabbit':
+            earsHTML = '<div class="animal-ears rabbit">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle rabbit" style="background: ' + lightenColor(furColor, 30) + '"></div>';
+            break;
+        case 'bear':
+            earsHTML = '<div class="animal-ears bear">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 15) + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 15) + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle bear" style="background: ' + lightenColor(furColor, 30) + '"></div>';
+            break;
+        case 'fox':
+            earsHTML = '<div class="animal-ears fox">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + lightenColor(furColor, 30) + '"></div>' +
+                '<div class="ear-tip" style="background: #2d2d2d"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + lightenColor(furColor, 30) + '"></div>' +
+                '<div class="ear-tip" style="background: #2d2d2d"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle" style="background: ' + lightenColor(furColor, 40) + '"></div>';
+            specialFeatures = '<div class="animal-whiskers">' +
+                '<div class="whisker-group left">' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '</div>' +
+                '<div class="whisker-group right">' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '<div class="whisker"></div>' +
+                '</div>' +
+                '</div>';
+            break;
+        case 'panda':
+            earsHTML = '<div class="animal-ears panda">' +
+                '<div class="ear left"></div>' +
+                '<div class="ear right"></div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle panda" style="background: #f5f5f5"></div>';
+            specialFeatures = '<div class="panda-eye-patches">' +
+                '<div class="eye-patch left"></div>' +
+                '<div class="eye-patch right"></div>' +
+                '</div>';
+            break;
+        case 'lion':
+            earsHTML = '<div class="animal-ears lion">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 15) + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 15) + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle lion" style="background: ' + lightenColor(furColor, 30) + '"></div>';
+            specialFeatures = '<div class="lion-mane" style="background: ' + darkenColor(furColor, 20) + '"></div>';
+            break;
+        case 'wolf':
+            earsHTML = '<div class="animal-ears wolf">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 20) + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + darkenColor(furColor, 20) + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle" style="background: ' + lightenColor(furColor, 25) + '"></div>';
+            break;
+        default:
+            earsHTML = '<div class="animal-ears cat">' +
+                '<div class="ear left" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '<div class="ear right" style="background: ' + furColor + '">' +
+                '<div class="ear-inner" style="background: ' + innerEarColor + '"></div>' +
+                '</div>' +
+                '</div>';
+            muzzleHTML = '<div class="face-muzzle" style="background: ' + lightenColor(furColor, 30) + '"></div>';
     }
 
-    getConfig() {
-        return this.config;
+    var glassesHTML = '';
+    if (config.glasses && config.glasses !== 'none') {
+        glassesHTML = '<div class="animal-glasses ' + config.glasses + '">' +
+            '<div class="glasses-bridge"></div>' +
+            '</div>';
     }
 
-    generateHTML(size = 'normal', animated = false) {
-        const c = this.config;
-        let sizeClass = '';
-        let animatedClass = animated ? 'animated' : '';
-        
-        if (size === 'mini') sizeClass = 'mini';
-        else if (size === 'small') sizeClass = 'small';
-        
-        const genderClass = c.gender || 'girl';
-        
-        return `
-            <div class="custom-avatar ${sizeClass} ${animatedClass} ${genderClass}" data-animated="${animated}" data-gender="${genderClass}">
-                <div class="avatar-head-container">
-                    <div class="avatar-face-base ${c.skinTone}">
-                        <div class="avatar-eyebrow left" style="background: ${this.getHairColorHex(c.hairColor)};"></div>
-                        <div class="avatar-eyebrow right" style="background: ${this.getHairColorHex(c.hairColor)};"></div>
-                        
-                        <div class="avatar-eyes-container">
-                            <div class="avatar-eye left">
-                                <div class="avatar-eye-pupil"></div>
-                                <div class="avatar-eye-lid" style="background: ${this.getSkinColorHex(c.skinTone)};"></div>
-                            </div>
-                            <div class="avatar-eye right">
-                                <div class="avatar-eye-pupil"></div>
-                                <div class="avatar-eye-lid" style="background: ${this.getSkinColorHex(c.skinTone)};"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="avatar-heart-eyes">
-                            <span class="heart">❤️</span>
-                            <span class="heart">❤️</span>
-                        </div>
-                        
-                        <div class="avatar-sparkle-eyes">
-                            <span class="sparkle">✨</span>
-                            <span class="sparkle">✨</span>
-                        </div>
-                        
-                        <div class="avatar-nose"></div>
-                        
-                        <div class="avatar-mouth-container">
-                            <div class="avatar-mouth smile"></div>
-                        </div>
-                        
-                        ${this.generateFaceFeatures(c.faceFeature, c.gender)}
-                        
-                        ${this.generateGlasses(c.glasses)}
-                    </div>
-                    
-                    <div class="avatar-hair ${c.hairStyle} ${c.hairColor}"></div>
-                    
-                    ${this.generateHeadAccessory(c.headAccessory)}
-                </div>
-                
-                <div class="avatar-body-container">
-                    <div class="avatar-neck ${c.skinTone}"></div>
-                    <div class="avatar-body ${c.outfitStyle} ${c.outfitColor}"></div>
-                </div>
-            </div>
-        `;
+    var accessoryHTML = '';
+    if (config.headAccessory && config.headAccessory !== 'none') {
+        accessoryHTML = '<div class="animal-head-accessory ' + config.headAccessory + '"></div>';
     }
 
-    getSkinColorHex(skin) {
-        const colors = {
-            'skin1': '#FFDBAC',
-            'skin2': '#F5CBA7',
-            'skin3': '#E0AC69',
-            'skin4': '#C68642',
-            'skin5': '#8D5524',
-            'skin6': '#5C3A21'
-        };
-        return colors[skin] || '#FFDBAC';
-    }
-
-    getHairColorHex(color) {
-        const colors = {
-            'black': '#1a1a1a',
-            'brown': '#5c3d2e',
-            'darkbrown': '#3d2314',
-            'blonde': '#d4a853',
-            'ginger': '#b55a30',
-            'red': '#8b2942',
-            'pink': '#e75480',
-            'blue': '#4a90d9',
-            'purple': '#7b4fa0',
-            'gray': '#888888'
-        };
-        return colors[color] || '#1a1a1a';
-    }
-
-    generateFaceFeatures(feature, gender) {
-        let html = '';
-        
-        if (gender === 'girl') {
-            html += `
-                <div class="avatar-blush-left"></div>
-                <div class="avatar-blush-right"></div>
-            `;
-        }
-        
-        switch (feature) {
+    var cheekHTML = '';
+    if (config.cheekStyle && config.cheekStyle !== 'none') {
+        switch (config.cheekStyle) {
             case 'blush':
-                if (gender !== 'girl') {
-                    html += `
-                        <div class="avatar-blush-left"></div>
-                        <div class="avatar-blush-right"></div>
-                    `;
-                }
+                cheekHTML = '<div class="animal-blush-left"></div>' +
+                    '<div class="animal-blush-right"></div>';
+                avatar.classList.add('blushing');
                 break;
             case 'freckles':
-                html += `<div class="avatar-freckles"></div>`;
+                cheekHTML = '<div class="animal-freckles"></div>';
                 break;
-            case 'mole':
-                html += `<div class="avatar-mole"></div>`;
+            case 'whiskers':
+                if (config.animalType !== 'cat' && config.animalType !== 'fox') {
+                    cheekHTML = '<div class="animal-whiskers">' +
+                        '<div class="whisker-group left">' +
+                        '<div class="whisker"></div>' +
+                        '<div class="whisker"></div>' +
+                        '<div class="whisker"></div>' +
+                        '</div>' +
+                        '<div class="whisker-group right">' +
+                        '<div class="whisker"></div>' +
+                        '<div class="whisker"></div>' +
+                        '<div class="whisker"></div>' +
+                        '</div>' +
+                        '</div>';
+                }
                 break;
         }
-        
-        return html;
     }
 
-    generateGlasses(type) {
-        if (type === 'none') return '';
-        
-        return `
-            <div class="avatar-glasses ${type}">
-                <div class="glasses-bridge"></div>
-            </div>
-        `;
+    var eyelashesHTML = '';
+    if (config.gender === 'girl') {
+        eyelashesHTML = '<div class="animal-eyelashes left"></div>' +
+            '<div class="animal-eyelashes right"></div>';
     }
 
-    generateHeadAccessory(type) {
-        if (type === 'none') return '';
-        
-        return `<div class="avatar-head-accessory ${type}"></div>`;
+    var faceColor = furColor;
+    if (config.animalType === 'panda') {
+        faceColor = '#f5f5f5';
     }
 
-    static getHairStyleOptions(gender = 'girl') {
-        const girlStyles = [
-            { value: 'short', label: 'Short' },
-            { value: 'medium', label: 'Medium' },
-            { value: 'long', label: 'Long' },
-            { value: 'curly', label: 'Curly' }
-        ];
-        
-        const boyStyles = [
-            { value: 'short', label: 'Short' },
-            { value: 'medium', label: 'Medium' },
-            { value: 'curly', label: 'Curly' },
-            { value: 'spiky', label: 'Spiky' },
-            { value: 'buzz', label: 'Buzz' }
-        ];
-        
-        return gender === 'boy' ? boyStyles : girlStyles;
+    var maneHTML = '';
+    if (config.animalType === 'lion') {
+        maneHTML = specialFeatures;
+        specialFeatures = '';
     }
 
-    static getHairColorOptions() {
-        return [
-            { value: 'black', label: 'Black', hex: '#1a1a1a' },
-            { value: 'brown', label: 'Brown', hex: '#5c3d2e' },
-            { value: 'darkbrown', label: 'Dark Brown', hex: '#3d2314' },
-            { value: 'blonde', label: 'Blonde', hex: '#d4a853' },
-            { value: 'ginger', label: 'Ginger', hex: '#b55a30' },
-            { value: 'red', label: 'Red', hex: '#8b2942' },
-            { value: 'pink', label: 'Pink', hex: '#e75480' },
-            { value: 'blue', label: 'Blue', hex: '#4a90d9' },
-            { value: 'purple', label: 'Purple', hex: '#7b4fa0' },
-            { value: 'gray', label: 'Gray', hex: '#888888' }
-        ];
-    }
+    avatar.innerHTML = '<div class="animal-head-container">' +
+        maneHTML +
+        earsHTML +
+        accessoryHTML +
+        '<div class="animal-face" style="background: ' + faceColor + '">' +
+        (config.animalType === 'panda' ? specialFeatures : '') +
+        muzzleHTML +
+        '<div class="animal-eyes-container">' +
+        '<div class="animal-eye">' +
+        '<div class="animal-eye-pupil"></div>' +
+        '<div class="animal-eye-lid" style="background: ' + faceColor + '"></div>' +
+        '</div>' +
+        '<div class="animal-eye">' +
+        '<div class="animal-eye-pupil"></div>' +
+        '<div class="animal-eye-lid" style="background: ' + faceColor + '"></div>' +
+        '</div>' +
+        '</div>' +
+        eyelashesHTML +
+        '<div class="animal-heart-eyes">' +
+        '<span class="heart">❤️</span>' +
+        '<span class="heart">❤️</span>' +
+        '</div>' +
+        '<div class="animal-sparkle-eyes">' +
+        '<span class="sparkle">✨</span>' +
+        '<span class="sparkle">✨</span>' +
+        '</div>' +
+        '<div class="animal-nose ' + noseClass + '"></div>' +
+        '<div class="animal-mouth-container">' +
+        '<div class="animal-mouth smile"></div>' +
+        '</div>' +
+        ((config.animalType === 'cat' || config.animalType === 'fox') ? specialFeatures : '') +
+        cheekHTML +
+        glassesHTML +
+        '</div>' +
+        '</div>' +
+        '<div class="animal-body-container">' +
+        '<div class="animal-neck" style="background: ' + furColor + '"></div>' +
+        '<div class="animal-body ' + config.outfitStyle + ' ' + config.outfitColor + '"></div>' +
+        '</div>';
 
-    static getSkinToneOptions() {
-        return [
-            { value: 'skin1', label: 'Light', hex: '#FFDBAC' },
-            { value: 'skin2', label: 'Fair', hex: '#F5CBA7' },
-            { value: 'skin3', label: 'Medium', hex: '#E0AC69' },
-            { value: 'skin4', label: 'Tan', hex: '#C68642' },
-            { value: 'skin5', label: 'Brown', hex: '#8D5524' },
-            { value: 'skin6', label: 'Dark', hex: '#5C3A21' }
-        ];
-    }
+    container.innerHTML = '';
+    container.appendChild(avatar);
 
-    static getOutfitStyleOptions() {
-        return [
-            { value: 'casual', label: 'Casual' },
-            { value: 'formal', label: 'Formal' },
-            { value: 'sporty', label: 'Sporty' },
-            { value: 'cozy', label: 'Cozy' }
-        ];
-    }
-
-    static getOutfitColorOptions() {
-        return [
-            { value: 'pink', label: 'Pink', hex: '#ff6b81' },
-            { value: 'blue', label: 'Blue', hex: '#3b82f6' },
-            { value: 'purple', label: 'Purple', hex: '#a855f7' },
-            { value: 'green', label: 'Green', hex: '#10b981' },
-            { value: 'yellow', label: 'Yellow', hex: '#f59e0b' },
-            { value: 'red', label: 'Red', hex: '#ef4444' },
-            { value: 'black', label: 'Black', hex: '#1f2937' },
-            { value: 'white', label: 'White', hex: '#f3f4f6' }
-        ];
-    }
-
-    static getGlassesOptions() {
-        return [
-            { value: 'none', label: 'None' },
-            { value: 'round', label: 'Round' },
-            { value: 'square', label: 'Square' },
-            { value: 'sunglasses', label: 'Sunglasses' }
-        ];
-    }
-
-    static getHeadAccessoryOptions(gender = 'girl') {
-        const girlAccessories = [
-            { value: 'none', label: 'None' },
-            { value: 'bow', label: 'Bow' },
-            { value: 'headband', label: 'Headband' },
-            { value: 'beanie', label: 'Beanie' },
-            { value: 'cap', label: 'Cap' },
-            { value: 'crown', label: 'Crown' }
-        ];
-        
-        const boyAccessories = [
-            { value: 'none', label: 'None' },
-            { value: 'beanie', label: 'Beanie' },
-            { value: 'cap', label: 'Cap' },
-            { value: 'crown', label: 'Crown' }
-        ];
-        
-        return gender === 'boy' ? boyAccessories : girlAccessories;
-    }
-
-    static getFaceFeatureOptions() {
-        return [
-            { value: 'none', label: 'None' },
-            { value: 'blush', label: 'Blush' },
-            { value: 'freckles', label: 'Freckles' },
-            { value: 'mole', label: 'Mole' }
-        ];
+    if (animate) {
+        startAvatarAnimations(avatar);
     }
 }
 
-class AvatarAnimator {
-    constructor(avatarElement) {
-        this.avatar = avatarElement;
-        this.animationQueue = [];
-        this.isAnimating = false;
-        this.blinkInterval = null;
-        this.randomAnimationInterval = null;
-    }
-
-    startAutoAnimations() {
-        if (!this.avatar) return;
-        
-        setTimeout(() => this.blink(), 500);
-        
-        this.blinkInterval = setInterval(() => {
-            this.blink();
-        }, Math.random() * 3000 + 2000);
-        
-        this.randomAnimationInterval = setInterval(() => {
-            this.playRandomAnimation();
-        }, Math.random() * 5000 + 5000);
-    }
-
-    stopAutoAnimations() {
-        if (this.blinkInterval) {
-            clearInterval(this.blinkInterval);
-            this.blinkInterval = null;
+function startAvatarAnimations(avatar) {
+    function blink() {
+        if (Math.random() > 0.5) {
+            avatar.classList.add('blinking');
+            setTimeout(function() {
+                avatar.classList.remove('blinking');
+            }, 150);
         }
-        if (this.randomAnimationInterval) {
-            clearInterval(this.randomAnimationInterval);
-            this.randomAnimationInterval = null;
-        }
-    }
-
-    blink() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('blinking');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('blinking');
-        }, 150);
-    }
-
-    eyeRoll() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('eye-roll');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('eye-roll');
-        }, 2000);
-    }
-
-    lookAround() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('looking');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('looking');
-        }, 6000);
-    }
-
-    wink() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('winking');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('winking');
-        }, 300);
-    }
-
-    smile() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('smiling');
-        this.changeMouth('happy');
-        setTimeout(() => {
-            if (this.avatar) {
-                this.avatar.classList.remove('smiling');
-                this.changeMouth('smile');
-            }
-        }, 3000);
-    }
-
-    bigSmile() {
-        if (!this.avatar) return;
-        this.changeMouth('big-smile');
-        this.avatar.classList.add('blushing');
-        setTimeout(() => {
-            if (this.avatar) {
-                this.changeMouth('smile');
-                this.avatar.classList.remove('blushing');
-            }
-        }, 3000);
-    }
-
-    laugh() {
-        if (!this.avatar) return;
-        this.changeMouth('laugh');
-        this.avatar.classList.add('bouncing');
-        setTimeout(() => {
-            if (this.avatar) {
-                this.changeMouth('smile');
-                this.avatar.classList.remove('bouncing');
-            }
-        }, 3000);
-    }
-
-    heartEyes() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('heart-eyes');
-        this.avatar.classList.add('blushing');
-        setTimeout(() => {
-            if (this.avatar) {
-                this.avatar.classList.remove('heart-eyes');
-                this.avatar.classList.remove('blushing');
-            }
-        }, 3000);
-    }
-
-    sparkleEyes() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('sparkle-eyes');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('sparkle-eyes');
-        }, 3000);
-    }
-
-    surprised() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('surprised');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('surprised');
-        }, 2000);
-    }
-
-    bounce() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('bouncing');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('bouncing');
-        }, 2000);
-    }
-
-    wave() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('waving');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('waving');
-        }, 2000);
-    }
-
-    hairSway() {
-        if (!this.avatar) return;
-        this.avatar.classList.add('hair-sway');
-        setTimeout(() => {
-            if (this.avatar) this.avatar.classList.remove('hair-sway');
-        }, 4000);
-    }
-
-    changeMouth(type) {
-        if (!this.avatar) return;
-        const mouth = this.avatar.querySelector('.avatar-mouth');
-        if (mouth) {
-            mouth.className = `avatar-mouth ${type}`;
-        }
-    }
-
-    playRandomAnimation() {
-        const animations = [
-            'eyeRoll',
-            'wink',
-            'smile',
-            'lookAround',
-            'hairSway',
-            'bounce'
-        ];
-        const randomAnim = animations[Math.floor(Math.random() * animations.length)];
-        this[randomAnim]();
-    }
-
-    celebrate() {
-        this.heartEyes();
-        setTimeout(() => this.bigSmile(), 1500);
-        setTimeout(() => this.bounce(), 3000);
-        setTimeout(() => this.sparkleEyes(), 4500);
-    }
-}
-
-const avatarBuilder = new AvatarBuilder();
-const activeAnimators = new Map();
-let azzaCelebrationInterval = null;
-
-function renderAvatar(containerId, config = null, size = 'normal', animated = false) {
-    const container = document.getElementById(containerId);
-    if (!container) return null;
-
-    if (activeAnimators.has(containerId)) {
-        activeAnimators.get(containerId).stopAutoAnimations();
-        activeAnimators.delete(containerId);
-    }
-
-    if (config) {
-        avatarBuilder.setConfig(config);
-    }
-
-    container.innerHTML = avatarBuilder.generateHTML(size, animated);
-
-    if (animated) {
-        const avatarElement = container.querySelector('.custom-avatar');
-        if (avatarElement) {
-            const animator = new AvatarAnimator(avatarElement);
-            animator.startAutoAnimations();
-            activeAnimators.set(containerId, animator);
-            return animator;
-        }
-    }
-
-    return null;
-}
-
-function renderProfileAvatar(containerId, size = 'normal', animated = false) {
-    const saved = localStorage.getItem('userProfile');
-    if (saved) {
-        const profile = JSON.parse(saved);
-        if (profile.avatar) {
-            return renderAvatar(containerId, profile.avatar, size, animated);
-        }
-    }
-    return null;
-}
-
-function getAvatarAnimator(containerId) {
-    return activeAnimators.get(containerId);
-}
-
-function stopAllAnimators() {
-    activeAnimators.forEach((animator, id) => {
-        animator.stopAutoAnimations();
-    });
-    activeAnimators.clear();
-}
-
-function updateGenderBasedOptions(gender) {
-    const hairStyleOptions = document.getElementById('hairStyleOptions');
-    if (hairStyleOptions) {
-        hairStyleOptions.querySelectorAll('.option-card[data-gender]').forEach(card => {
-            const cardGender = card.dataset.gender;
-            if (cardGender === 'both' || cardGender === gender) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-                card.classList.remove('selected');
-            }
-        });
-        
-        const visibleCards = hairStyleOptions.querySelectorAll('.option-card:not([style*="display: none"])');
-        const hasSelected = Array.from(visibleCards).some(card => card.classList.contains('selected'));
-        if (!hasSelected && visibleCards.length > 0) {
-            visibleCards[0].classList.add('selected');
-        }
+        setTimeout(blink, 2000 + Math.random() * 2000);
     }
     
-    const headAccessoryOptions = document.getElementById('headAccessoryOptions');
-    if (headAccessoryOptions) {
-        headAccessoryOptions.querySelectorAll('.option-card[data-gender]').forEach(card => {
-            const cardGender = card.dataset.gender;
-            if (cardGender === 'both' || cardGender === gender) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-                card.classList.remove('selected');
-            }
-        });
+    function wiggleEars() {
+        if (Math.random() > 0.6) {
+            avatar.classList.add('ear-wiggle');
+            setTimeout(function() {
+                avatar.classList.remove('ear-wiggle');
+            }, 500);
+        }
+        setTimeout(wiggleEars, 3000 + Math.random() * 3000);
     }
     
-    const settingsHairStyleOptions = document.getElementById('settingsHairStyleOptions');
-    if (settingsHairStyleOptions) {
-        settingsHairStyleOptions.querySelectorAll('.scroll-option[data-gender]').forEach(option => {
-            const optionGender = option.dataset.gender;
-            if (optionGender === 'both' || optionGender === gender) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-                option.classList.remove('selected');
-            }
-        });
-        
-        const visibleOptions = settingsHairStyleOptions.querySelectorAll('.scroll-option:not([style*="display: none"])');
-        const hasSelected = Array.from(visibleOptions).some(opt => opt.classList.contains('selected'));
-        if (!hasSelected && visibleOptions.length > 0) {
-            visibleOptions[0].classList.add('selected');
-        }
-    }
-    
-    const settingsHeadAccessoryOptions = document.getElementById('settingsHeadAccessoryOptions');
-    if (settingsHeadAccessoryOptions) {
-        settingsHeadAccessoryOptions.querySelectorAll('.scroll-option[data-gender]').forEach(option => {
-            const optionGender = option.dataset.gender;
-            if (optionGender === 'both' || optionGender === gender) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-                option.classList.remove('selected');
-            }
-        });
-    }
+    setTimeout(blink, 1000);
+    setTimeout(wiggleEars, 2000);
 }
 
-function getSelectedHairStyle() {
-    const hairStyleOptions = document.getElementById('hairStyleOptions');
-    if (hairStyleOptions) {
-        const selected = hairStyleOptions.querySelector('.option-card.selected:not([style*="display: none"])');
-        if (selected) {
-            return selected.dataset.value;
-        }
-        const firstVisible = hairStyleOptions.querySelector('.option-card:not([style*="display: none"])');
-        if (firstVisible) {
-            return firstVisible.dataset.value;
-        }
+function lightenColor(color, percent) {
+    if (color.startsWith('#')) {
+        var num = parseInt(color.replace('#', ''), 16);
+        var amt = Math.round(2.55 * percent);
+        var R = Math.min(255, (num >> 16) + amt);
+        var G = Math.min(255, (num >> 8 & 0x00FF) + amt);
+        var B = Math.min(255, (num & 0x0000FF) + amt);
+        return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
     }
-    return 'short';
+    return color;
 }
 
-function getSelectedHeadAccessory() {
-    const headAccessoryOptions = document.getElementById('headAccessoryOptions');
-    if (headAccessoryOptions) {
-        const selected = headAccessoryOptions.querySelector('.option-card.selected:not([style*="display: none"])');
-        if (selected) {
-            return selected.dataset.value;
-        }
+function darkenColor(color, percent) {
+    if (color.startsWith('#')) {
+        var num = parseInt(color.replace('#', ''), 16);
+        var amt = Math.round(2.55 * percent);
+        var R = Math.max(0, (num >> 16) - amt);
+        var G = Math.max(0, (num >> 8 & 0x00FF) - amt);
+        var B = Math.max(0, (num & 0x0000FF) - amt);
+        return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
     }
-    return 'none';
-}
-
-function createSpecialAzzaPage() {
-    const existing = document.getElementById('specialAzzaOverlay');
-    if (existing) {
-        existing.remove();
-    }
-
-    if (azzaCelebrationInterval) {
-        clearInterval(azzaCelebrationInterval);
-        azzaCelebrationInterval = null;
-    }
-
-    const overlay = document.createElement('div');
-    overlay.className = 'special-azza-overlay';
-    overlay.id = 'specialAzzaOverlay';
-
-    let flowersHTML = '<div class="flowers-container">';
-    const flowerEmojis = ['🌸', '🌺', '🌷', '🌹', '💐', '🌻', '🌼', '💮', '🏵️', '🪷', '🌱', '🍀', '🦋', '💕', '💖', '💗'];
-    for (let i = 0; i < 50; i++) {
-        const flower = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
-        const left = Math.random() * 100;
-        const duration = Math.random() * 5 + 6;
-        const delay = Math.random() * 10;
-        const size = Math.random() * 1.5 + 1;
-        flowersHTML += `<span class="flower" style="left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s; font-size: ${size}rem;">${flower}</span>`;
-    }
-    flowersHTML += '</div>';
-
-    let sparklesHTML = '<div class="sparkles-bg">';
-    for (let i = 0; i < 80; i++) {
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const delay = Math.random() * 4;
-        const size = Math.random() * 0.8 + 0.4;
-        const sparkleTypes = ['✨', '⭐', '🌟', '💫'];
-        const sparkle = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
-        sparklesHTML += `<span class="sparkle-star" style="left: ${left}%; top: ${top}%; animation-delay: ${delay}s; font-size: ${size}rem;">${sparkle}</span>`;
-    }
-    sparklesHTML += '</div>';
-
-    overlay.innerHTML = `
-        ${flowersHTML}
-        ${sparklesHTML}
-        <div class="special-azza-content">
-            <div class="special-azza-avatar" id="specialAzzaAvatar"></div>
-            <h1 class="special-azza-title">For My Dearest Azza 💕</h1>
-            <div class="special-azza-hearts">
-                <span class="heart">💖</span>
-                <span class="heart">💗</span>
-                <span class="heart">💓</span>
-                <span class="heart">💗</span>
-                <span class="heart">💖</span>
-            </div>
-            <p class="special-azza-message">
-                Every letter in this app was written with you in mind.<br><br>
-                You are the reason behind every word, every color, every animation.<br><br>
-                When I created this, I thought of your smile, your laugh, your beautiful soul.<br><br>
-                You are not just special to me — you are everything.<br><br>
-                <em style="color: #ffb6c1;">Yīnwèi nǐ shì nà zhǒng zhídé bèi xiě jìn shū lǐ de nǚhái.</em><br><br>
-                Because you are that kind of girl worth being written into books.<br><br>
-                <strong style="font-size: 1.4em; color: #ff6b81;">Forever yours 💕</strong>
-            </p>
-            <button class="special-azza-close" id="closeSpecialAzza">
-                <i class="fas fa-heart"></i> Continue with Love
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(overlay);
-
-    document.getElementById('closeSpecialAzza').addEventListener('click', () => {
-        hideSpecialAzzaPage();
-    });
-
-    overlay.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    const preventEscape = (e) => {
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    };
-    document.addEventListener('keydown', preventEscape);
-    overlay._escapeHandler = preventEscape;
-}
-
-function showSpecialAzzaPage(avatarConfig) {
-    createSpecialAzzaPage();
-
-    const overlay = document.getElementById('specialAzzaOverlay');
-    if (!overlay) return;
-
-    overlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
-
-    const animator = renderAvatar('specialAzzaAvatar', avatarConfig, 'normal', true);
-
-    if (animator) {
-        setTimeout(() => animator.heartEyes(), 500);
-        setTimeout(() => animator.bigSmile(), 2500);
-        setTimeout(() => animator.bounce(), 4000);
-        setTimeout(() => animator.sparkleEyes(), 5500);
-        setTimeout(() => animator.laugh(), 7000);
-        setTimeout(() => animator.heartEyes(), 8500);
-        
-        azzaCelebrationInterval = setInterval(() => {
-            const overlay = document.getElementById('specialAzzaOverlay');
-            if (!overlay || !overlay.classList.contains('show')) {
-                clearInterval(azzaCelebrationInterval);
-                azzaCelebrationInterval = null;
-                return;
-            }
-            
-            const celebrationAnims = ['heartEyes', 'sparkleEyes', 'bigSmile', 'bounce', 'laugh', 'wink'];
-            const randomAnim = celebrationAnims[Math.floor(Math.random() * celebrationAnims.length)];
-            if (animator && animator[randomAnim]) {
-                animator[randomAnim]();
-            }
-        }, 4000);
-    }
-}
-
-function hideSpecialAzzaPage() {
-    const overlay = document.getElementById('specialAzzaOverlay');
-    if (!overlay) return;
-
-    if (azzaCelebrationInterval) {
-        clearInterval(azzaCelebrationInterval);
-        azzaCelebrationInterval = null;
-    }
-
-    if (overlay._escapeHandler) {
-        document.removeEventListener('keydown', overlay._escapeHandler);
-    }
-
-    document.body.style.overflow = '';
-
-    overlay.classList.remove('show');
-    overlay.classList.add('hiding');
-
-    if (activeAnimators.has('specialAzzaAvatar')) {
-        activeAnimators.get('specialAzzaAvatar').stopAutoAnimations();
-        activeAnimators.delete('specialAzzaAvatar');
-    }
-
-    setTimeout(() => {
-        if (overlay && overlay.parentNode) {
-            overlay.parentNode.removeChild(overlay);
-        }
-    }, 500);
+    return color;
 }
 
 function checkIfAzza(firstName, lastName) {
-    if (!firstName || !lastName) return false;
-    const fullName = `${firstName} ${lastName}`.toLowerCase().trim();
-    return fullName === 'azza chouikh';
+    var first = (firstName || '').toLowerCase().trim();
+    var last = (lastName || '').toLowerCase().trim();
+    return first === 'azza' || (first === 'azza' && last === 'dahen');
 }
 
 function isChangingToAzza(oldFirst, oldLast, newFirst, newLast) {
-    const wasAzza = checkIfAzza(oldFirst, oldLast);
-    const isAzza = checkIfAzza(newFirst, newLast);
+    var wasAzza = checkIfAzza(oldFirst, oldLast);
+    var isAzza = checkIfAzza(newFirst, newLast);
     return !wasAzza && isAzza;
+}
+
+function showSpecialAzzaPage(avatarConfig) {
+    var overlay = document.getElementById('specialAzzaOverlay');
+    
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'specialAzzaOverlay';
+        overlay.className = 'special-azza-overlay';
+        
+        overlay.innerHTML = '<div class="sparkles-bg" id="sparklesBg"></div>' +
+            '<div class="flowers-container" id="flowersContainer"></div>' +
+            '<div class="special-azza-content">' +
+            '<div class="special-azza-avatar" id="azzaAvatarContainer"></div>' +
+            '<h1 class="special-azza-title">Welcome, Azza! 💕</h1>' +
+            '<div class="special-azza-hearts">' +
+            '<span class="heart">💖</span>' +
+            '<span class="heart">💕</span>' +
+            '<span class="heart">💗</span>' +
+            '<span class="heart">💕</span>' +
+            '<span class="heart">💖</span>' +
+            '</div>' +
+            '<div class="special-azza-message">' +
+            '<p>This entire page was created just for you. Every letter, every word, every animation - it\'s all a testament to how special you are.</p>' +
+            '<p>You deserve all the love and happiness in the world. Never forget how amazing you are! ✨</p>' +
+            '</div>' +
+            '<button class="special-azza-close" id="closeAzzaPage">Enter Your Special Space 💕</button>' +
+            '</div>';
+        
+        document.body.appendChild(overlay);
+        
+        document.getElementById('closeAzzaPage').addEventListener('click', function() {
+            overlay.classList.add('hiding');
+            setTimeout(function() {
+                overlay.classList.remove('show', 'hiding');
+                overlay.style.display = 'none';
+            }, 500);
+        });
+    }
+    
+    overlay.style.display = 'flex';
+    overlay.classList.add('show');
+    
+    setTimeout(function() {
+        renderAvatar('azzaAvatarContainer', avatarConfig, 'normal', true);
+        createFlowers(document.getElementById('flowersContainer'));
+        createSparkles(document.getElementById('sparklesBg'));
+    }, 100);
+}
+
+function createFlowers(container) {
+    if (!container) return;
+    container.innerHTML = '';
+    
+    var flowers = ['🌸', '🌺', '🌷', '💐', '🌹', '🏵️', '💮'];
+    
+    for (var i = 0; i < 30; i++) {
+        var flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+        flower.style.left = Math.random() * 100 + '%';
+        flower.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        flower.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        flower.style.animationDelay = (Math.random() * 10) + 's';
+        container.appendChild(flower);
+    }
+}
+
+function createSparkles(container) {
+    if (!container) return;
+    container.innerHTML = '';
+    
+    for (var i = 0; i < 50; i++) {
+        var sparkle = document.createElement('div');
+        sparkle.className = 'sparkle-star';
+        sparkle.textContent = '✨';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.fontSize = (Math.random() * 15 + 10) + 'px';
+        sparkle.style.animationDelay = (Math.random() * 3) + 's';
+        container.appendChild(sparkle);
+    }
 }
