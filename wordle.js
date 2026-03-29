@@ -13,7 +13,6 @@ const wordHints = {
     "TRUST": "Firm belief in the reliability of someone",
     "LONGING": "A yearning desire for something or someone",
     "JOY": "A feeling of great pleasure and happiness",
-    "SPIRIT": "The essence of a person",
     "HOPE": "A feeling of expectation for something positive",
     "SERENITY": "The state of being calm and peaceful",
     "BELONGING": "The feeling of being accepted and fitting in",
@@ -307,7 +306,25 @@ const wordHints = {
     "RABBIT": "A small furry mammal",
     "NURSERY": "A room for young children",
     "SKIN": "The outer covering of the body",
-    "HATE": "A feeling the opposite of love"
+    "HATE": "A feeling the opposite of love",
+    "LOVE": "A deep affection for someone",
+    "HAPPY": "Feeling pleasure and contentment",
+    "SMILE": "A pleased expression on the face",
+    "KISS": "A touch with the lips as a sign of love",
+    "HUG": "To hold someone tightly in your arms",
+    "CARE": "To feel concern or interest",
+    "SWEET": "Pleasing and kind in nature",
+    "DEAR": "Regarded with deep affection",
+    "PURE": "Not mixed with anything else; innocent",
+    "TRUE": "In accordance with fact; genuine",
+    "REAL": "Actually existing; authentic",
+    "SOFT": "Easy to mold; gentle",
+    "WARM": "Having moderate heat; friendly",
+    "SAFE": "Protected from harm",
+    "GLOW": "To emit light and warmth",
+    "SHINE": "To give out bright light",
+    "BLISS": "Perfect happiness",
+    "GRACE": "Elegance and beauty of movement"
 };
 
 class LoveWordle {
@@ -335,6 +352,7 @@ class LoveWordle {
         this.maxHints = 3;
         this.keyboardState = {};
         
+        // Store reference to this game
         currentWordleGame = this;
         
         this.init(resumeState);
@@ -349,11 +367,13 @@ class LoveWordle {
         this.resetHintButton();
         this.displayStreak();
         
+        // Resume game state if exists
         if (resumeState) {
             this.restoreGameState(resumeState);
         } else {
+            // Check for saved state
             const savedState = this.loadGameState();
-            if (savedState) {
+            if (savedState && !savedState.gameOver) {
                 this.restoreGameState(savedState);
             }
         }
@@ -367,9 +387,13 @@ class LoveWordle {
     
     resetHintButton() {
         const hintBtn = document.getElementById('hintBtn');
-        hintBtn.disabled = false;
-        hintBtn.style.opacity = '1';
-        this.wordleHints.innerHTML = '';
+        if (hintBtn) {
+            hintBtn.disabled = false;
+            hintBtn.style.opacity = '1';
+        }
+        if (this.wordleHints) {
+            this.wordleHints.innerHTML = '';
+        }
     }
     
     displayStreak() {
@@ -479,14 +503,18 @@ class LoveWordle {
     
     setupEventListeners() {
         const hintBtn = document.getElementById('hintBtn');
-        const newHintBtn = hintBtn.cloneNode(true);
-        hintBtn.parentNode.replaceChild(newHintBtn, hintBtn);
-        newHintBtn.addEventListener('click', () => this.showHint());
+        if (hintBtn) {
+            const newHintBtn = hintBtn.cloneNode(true);
+            hintBtn.parentNode.replaceChild(newHintBtn, hintBtn);
+            newHintBtn.addEventListener('click', () => this.showHint());
+        }
         
         const skipBtn = document.getElementById('skipBtn');
-        const newSkipBtn = skipBtn.cloneNode(true);
-        skipBtn.parentNode.replaceChild(newSkipBtn, skipBtn);
-        newSkipBtn.addEventListener('click', () => this.pauseGame());
+        if (skipBtn) {
+            const newSkipBtn = skipBtn.cloneNode(true);
+            skipBtn.parentNode.replaceChild(newSkipBtn, skipBtn);
+            newSkipBtn.addEventListener('click', () => this.pauseGame());
+        }
     }
     
     handleKeyPress(key) {
@@ -583,7 +611,9 @@ class LoveWordle {
         result.forEach((status, i) => {
             setTimeout(() => {
                 const tile = document.querySelector(`.wordle-tile[data-row="${this.currentRow}"][data-col="${i}"]`);
-                tile.classList.add(status);
+                if (tile) {
+                    tile.classList.add(status);
+                }
                 
                 const key = document.querySelector(`.key[data-key="${guessArray[i]}"]`);
                 if (key) {
@@ -605,8 +635,10 @@ class LoveWordle {
     
     shakeRow() {
         const row = document.querySelector(`.wordle-row[data-row="${this.currentRow}"]`);
-        row.classList.add('shake');
-        setTimeout(() => row.classList.remove('shake'), 500);
+        if (row) {
+            row.classList.add('shake');
+            setTimeout(() => row.classList.remove('shake'), 500);
+        }
     }
     
     getWordDescription() {
@@ -652,13 +684,18 @@ class LoveWordle {
         
         if (hintsRemaining === 0) {
             hint += ' (No more hints)';
-            document.getElementById('hintBtn').disabled = true;
-            document.getElementById('hintBtn').style.opacity = '0.5';
+            const hintBtn = document.getElementById('hintBtn');
+            if (hintBtn) {
+                hintBtn.disabled = true;
+                hintBtn.style.opacity = '0.5';
+            }
         } else {
             hint += ` (${hintsRemaining} hints left)`;
         }
         
-        this.wordleHints.innerHTML = `<span class="hint-text">${hint}</span>`;
+        if (this.wordleHints) {
+            this.wordleHints.innerHTML = `<span class="hint-text">${hint}</span>`;
+        }
         this.saveGameState();
     }
     
@@ -669,35 +706,49 @@ class LoveWordle {
         this.resultMessage.textContent = this.currentMessage;
         this.wordleResult.classList.add('show');
         
+        // Update streak
         updateStreak();
         this.displayStreak();
         
+        // Mark as completed
         const today = new Date().toISOString().split('T')[0];
         localStorage.setItem('wordlePlayed_' + today, 'true');
+        
+        // Update profile stats
+        if (typeof ProfileManager !== 'undefined') {
+            ProfileManager.incrementWordlesPlayed();
+            ProfileManager.updateStreakDisplay();
+        }
     }
     
     pauseGame() {
+        // Save current state and close
         this.saveGameState();
         
+        // Hide wordle overlay
         this.wordleOverlay.classList.add('hidden');
         
+        // Show main content
         document.getElementById('mainContent').style.display = 'block';
     }
     
     saveGameState() {
         const today = new Date().toISOString().split('T')[0];
         
+        // Get current tile values
         const tiles = [];
         for (let i = 0; i <= this.currentRow; i++) {
             const rowTiles = [];
             for (let j = 0; j < this.wordLength; j++) {
                 const tile = document.querySelector(`.wordle-tile[data-row="${i}"][data-col="${j}"]`);
-                rowTiles.push({
-                    letter: tile.textContent,
-                    status: tile.classList.contains('correct') ? 'correct' : 
-                            tile.classList.contains('present') ? 'present' : 
-                            tile.classList.contains('absent') ? 'absent' : ''
-                });
+                if (tile) {
+                    rowTiles.push({
+                        letter: tile.textContent,
+                        status: tile.classList.contains('correct') ? 'correct' : 
+                                tile.classList.contains('present') ? 'present' : 
+                                tile.classList.contains('absent') ? 'absent' : ''
+                    });
+                }
             }
             tiles.push(rowTiles);
         }
@@ -741,6 +792,7 @@ class LoveWordle {
         this.hintsUsed = state.hintsUsed || 0;
         this.keyboardState = state.keyboardState || {};
         
+        // Restore tiles
         if (state.tiles) {
             state.tiles.forEach((row, rowIndex) => {
                 row.forEach((tileData, colIndex) => {
@@ -756,6 +808,7 @@ class LoveWordle {
             });
         }
         
+        // Restore keyboard colors
         Object.keys(this.keyboardState).forEach(letter => {
             const key = document.querySelector(`.key[data-key="${letter}"]`);
             if (key) {
@@ -763,13 +816,18 @@ class LoveWordle {
             }
         });
         
+        // Restore hint button state
         if (this.hintsUsed >= this.maxHints) {
-            document.getElementById('hintBtn').disabled = true;
-            document.getElementById('hintBtn').style.opacity = '0.5';
+            const hintBtn = document.getElementById('hintBtn');
+            if (hintBtn) {
+                hintBtn.disabled = true;
+                hintBtn.style.opacity = '0.5';
+            }
         }
     }
 }
 
+// Streak functions
 function getStreak() {
     return parseInt(localStorage.getItem('wordleStreak') || '0');
 }
@@ -808,11 +866,16 @@ function updateStreak() {
     return streak;
 }
 
+// Global keyboard handler
 function handleGlobalKeydown(e) {
     const wordleOverlay = document.getElementById('wordleOverlay');
     
     if (!wordleOverlay || wordleOverlay.classList.contains('hidden')) return;
     if (!currentWordleGame || currentWordleGame.gameOver) return;
+    
+    // Check if result is showing
+    const wordleResult = document.getElementById('wordleResult');
+    if (wordleResult && wordleResult.classList.contains('show')) return;
     
     if (e.key === 'Enter' || e.key === 'Backspace' || /^[a-zA-Z]$/.test(e.key)) {
         e.preventDefault();
@@ -827,65 +890,89 @@ function handleGlobalKeydown(e) {
     }
 }
 
+// Initialize Wordle game when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     
+    // Add global keyboard listener
     document.addEventListener('keydown', handleGlobalKeydown);
     
-    const today = new Date().toISOString().split('T')[0];
-    const alreadyPlayed = localStorage.getItem('wordlePlayed_' + today);
-    
-    if (alreadyPlayed) {
-        document.getElementById('wordleOverlay').classList.add('hidden');
-        document.getElementById('mainContent').style.display = 'block';
-    } else {
-        document.getElementById('mainContent').style.display = 'none';
-        new LoveWordle();
-    }
-    
-    document.getElementById('continueBtn').addEventListener('click', function() {
-        const wordleOverlay = document.getElementById('wordleOverlay');
-        const mainContent = document.getElementById('mainContent');
-        
-        wordleOverlay.classList.add('hidden');
-        mainContent.style.display = 'block';
-        
-        document.getElementById('wordleBoard').style.display = '';
-        document.getElementById('wordleKeyboard').style.display = '';
-        document.querySelector('.wordle-controls').style.display = '';
-        document.getElementById('wordleHints').style.display = '';
-        document.getElementById('wordleMessagePreview').style.display = 'none';
-        document.querySelector('.wordle-subtitle').textContent = 'Guess the word that describes the message below';
-        document.getElementById('wordleResult').classList.remove('show');
-        
-        const today = new Date().toISOString().split('T')[0];
-        localStorage.setItem('wordlePlayed_' + today, 'true');
-    });
-    
-    document.getElementById('wordleReplayButton').addEventListener('click', function() {
-        const today = new Date().toISOString().split('T')[0];
-        const alreadyPlayed = localStorage.getItem('wordlePlayed_' + today);
-        const storedWord = localStorage.getItem('wordleWord_' + today);
-        const storedMessage = localStorage.getItem('wordleMessage_' + today);
-        const savedState = localStorage.getItem('wordleGameState_' + today);
-        
-        const wordleOverlay = document.getElementById('wordleOverlay');
-        
-        if (alreadyPlayed && storedWord && storedMessage) {
-            showWordleResultOnly(storedWord, storedMessage);
-        } else {
-            wordleOverlay.classList.remove('hidden');
-            document.getElementById('wordleResult').classList.remove('show');
+    // Continue button - Always attach this listener
+    const continueBtn = document.getElementById('continueBtn');
+    if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+            const wordleOverlay = document.getElementById('wordleOverlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            wordleOverlay.classList.add('hidden');
+            mainContent.style.display = 'block';
             
             document.getElementById('wordleBoard').style.display = '';
             document.getElementById('wordleKeyboard').style.display = '';
-            document.querySelector('.wordle-controls').style.display = '';
-            document.getElementById('wordleHints').style.display = '';
-            document.getElementById('wordleMessagePreview').style.display = 'none';
-            document.querySelector('.wordle-subtitle').textContent = 'Guess the word that describes the message below';
             
-            new LoveWordle();
-        }
-    });
+            const wordleControls = document.querySelector('.wordle-controls');
+            if (wordleControls) wordleControls.style.display = '';
+            
+            const wordleHints = document.getElementById('wordleHints');
+            if (wordleHints) wordleHints.style.display = '';
+            
+            const messagePreview = document.getElementById('wordleMessagePreview');
+            if (messagePreview) messagePreview.style.display = 'none';
+            
+            const subtitle = document.querySelector('.wordle-subtitle');
+            if (subtitle) subtitle.textContent = 'Guess the word that describes the message below';
+            
+            const wordleResult = document.getElementById('wordleResult');
+            if (wordleResult) wordleResult.classList.remove('show');
+            
+            const today = new Date().toISOString().split('T')[0];
+            localStorage.setItem('wordlePlayed_' + today, 'true');
+            
+            // Update profile stats
+            if (typeof ProfileManager !== 'undefined') {
+                ProfileManager.incrementWordlesPlayed();
+                ProfileManager.updateStreakDisplay();
+            }
+        });
+    }
+    
+    // Wordle Replay Button Handler
+    const replayBtn = document.getElementById('wordleReplayButton');
+    if (replayBtn) {
+        replayBtn.addEventListener('click', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const alreadyPlayed = localStorage.getItem('wordlePlayed_' + today);
+            const storedWord = localStorage.getItem('wordleWord_' + today);
+            const storedMessage = localStorage.getItem('wordleMessage_' + today);
+            
+            const wordleOverlay = document.getElementById('wordleOverlay');
+            
+            if (alreadyPlayed && storedWord && storedMessage) {
+                showWordleResultOnly(storedWord, storedMessage);
+            } else {
+                wordleOverlay.classList.remove('hidden');
+                
+                const wordleResult = document.getElementById('wordleResult');
+                if (wordleResult) wordleResult.classList.remove('show');
+                
+                document.getElementById('wordleBoard').style.display = '';
+                document.getElementById('wordleKeyboard').style.display = '';
+                
+                const wordleControls = document.querySelector('.wordle-controls');
+                if (wordleControls) wordleControls.style.display = '';
+                
+                const wordleHints = document.getElementById('wordleHints');
+                if (wordleHints) wordleHints.style.display = '';
+                
+                const messagePreview = document.getElementById('wordleMessagePreview');
+                if (messagePreview) messagePreview.style.display = 'none';
+                
+                const subtitle = document.querySelector('.wordle-subtitle');
+                if (subtitle) subtitle.textContent = 'Guess the word that describes the message below';
+                
+                new LoveWordle();
+            }
+        });
+    }
 });
 
 function showWordleResultOnly(word, message) {
@@ -897,11 +984,18 @@ function showWordleResultOnly(word, message) {
     
     document.getElementById('wordleBoard').style.display = 'none';
     document.getElementById('wordleKeyboard').style.display = 'none';
-    document.querySelector('.wordle-controls').style.display = 'none';
-    document.getElementById('wordleHints').style.display = 'none';
-    document.getElementById('wordleMessagePreview').style.display = 'none';
     
-    document.querySelector('.wordle-subtitle').textContent = "Today's word was...";
+    const wordleControls = document.querySelector('.wordle-controls');
+    if (wordleControls) wordleControls.style.display = 'none';
+    
+    const wordleHints = document.getElementById('wordleHints');
+    if (wordleHints) wordleHints.style.display = 'none';
+    
+    const messagePreview = document.getElementById('wordleMessagePreview');
+    if (messagePreview) messagePreview.style.display = 'none';
+    
+    const subtitle = document.querySelector('.wordle-subtitle');
+    if (subtitle) subtitle.textContent = "Today's word was...";
     
     const streak = getStreak();
     resultTitle.textContent = `💕 Today's Love Word 💕`;
