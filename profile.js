@@ -37,12 +37,13 @@ var ProfileManager = {
             }
             if (self.profile.themeColor) {
                 self.themeColor = self.profile.themeColor;
-                self.applyThemeColor(self.themeColor);
             }
+            self.applyThemeColor(self.themeColor);
             self.syncStreak();
             self.showMainContent();
             self.updateProfileDisplay();
         } else {
+            self.applyThemeColor(self.themeColor);
             self.showSetupOverlay();
         }
     },
@@ -290,13 +291,154 @@ var ProfileManager = {
 
     applyThemeColor: function(color) {
         var self = this;
-        document.documentElement.style.setProperty('--theme-color', color);
         self.themeColor = color;
-
-        var elements = document.querySelectorAll('.step-btn.next-btn, .step-btn.finish-btn, .settings-save-btn, #closeModal');
-        elements.forEach(function(el) {
-            el.style.background = 'linear-gradient(135deg, ' + color + ' 0%, ' + self.lightenColorMethod(color, 20) + ' 100%)';
+        
+        document.documentElement.style.setProperty('--theme-color', color);
+        
+        var lighterColor = self.lightenColorMethod(color, 20);
+        var gradient = 'linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%)';
+        
+        var nextBtns = document.querySelectorAll('.step-btn.next-btn');
+        nextBtns.forEach(function(btn) {
+            btn.style.background = gradient;
         });
+        
+        var finishBtns = document.querySelectorAll('.step-btn.finish-btn');
+        finishBtns.forEach(function(btn) {
+            btn.style.background = gradient;
+        });
+        
+        var saveBtns = document.querySelectorAll('.settings-save-btn');
+        saveBtns.forEach(function(btn) {
+            btn.style.background = gradient;
+        });
+        
+        var closeModalBtn = document.getElementById('closeModal');
+        if (closeModalBtn) {
+            closeModalBtn.style.background = gradient;
+        }
+        
+        var profileStreak = document.getElementById('profileStreak');
+        if (profileStreak) {
+            profileStreak.style.color = color;
+        }
+        
+        var settingsTabsActive = document.querySelectorAll('.settings-tab.active');
+        settingsTabsActive.forEach(function(tab) {
+            tab.style.color = color;
+            tab.style.borderBottomColor = color;
+        });
+        
+        var selectedOptions = document.querySelectorAll('.option-btn.selected, .scroll-option.selected');
+        selectedOptions.forEach(function(opt) {
+            opt.style.borderColor = color;
+            opt.style.background = color;
+        });
+        
+        var selectedCards = document.querySelectorAll('.option-card.selected');
+        selectedCards.forEach(function(card) {
+            card.style.borderColor = color;
+        });
+        
+        var selectedCircles = document.querySelectorAll('.color-circle.selected');
+        selectedCircles.forEach(function(circle) {
+            circle.style.boxShadow = '0 0 0 3px ' + color;
+        });
+        
+        var statValues = document.querySelectorAll('.stat-value');
+        statValues.forEach(function(stat) {
+            stat.style.color = color;
+        });
+        
+        var previewButton = document.querySelector('.preview-button');
+        if (previewButton) {
+            previewButton.style.background = color;
+        }
+        
+        var previewHeart = document.querySelector('.preview-heart');
+        if (previewHeart) {
+            previewHeart.style.color = color;
+        }
+        
+        var secretBtn = document.getElementById('secretLetterButton');
+        if (secretBtn) {
+            secretBtn.style.background = gradient;
+        }
+        
+        var wordleReplayBtn = document.getElementById('wordleReplayButton');
+        if (wordleReplayBtn) {
+            wordleReplayBtn.style.background = gradient;
+        }
+        
+        var wordleBtns = document.querySelectorAll('.wordle-btn');
+        wordleBtns.forEach(function(btn) {
+            if (btn.classList.contains('hint-btn') || btn.classList.contains('continue-btn')) {
+                btn.style.background = gradient;
+            }
+        });
+        
+        var heartDecorations = document.querySelectorAll('.heart-decoration');
+        heartDecorations.forEach(function(heart) {
+            heart.style.color = color;
+        });
+        
+        self.injectThemeStyles(color);
+    },
+
+    injectThemeStyles: function(color) {
+        var self = this;
+        var lighterColor = self.lightenColorMethod(color, 20);
+        var styleId = 'dynamic-theme-styles';
+        var existingStyle = document.getElementById(styleId);
+        
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+        
+        var style = document.createElement('style');
+        style.id = styleId;
+        style.textContent = 
+            ':root { --theme-color: ' + color + '; }' +
+            '.step-btn.next-btn, .step-btn.finish-btn { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.settings-save-btn { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '#closeModal { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.profile-streak { color: ' + color + ' !important; }' +
+            '.settings-tab.active { color: ' + color + ' !important; border-bottom-color: ' + color + ' !important; }' +
+            '.option-btn.selected { border-color: ' + color + ' !important; background: ' + color + ' !important; }' +
+            '.scroll-option.selected { border-color: ' + color + ' !important; background: ' + color + ' !important; }' +
+            '.option-card.selected { border-color: ' + color + ' !important; background: rgba(' + self.hexToRgb(color) + ', 0.1) !important; }' +
+            '.option-btn:hover { border-color: ' + color + ' !important; }' +
+            '.scroll-option:hover { border-color: ' + color + ' !important; }' +
+            '.option-card:hover { border-color: ' + color + ' !important; }' +
+            '.form-group input:focus { border-color: ' + color + ' !important; box-shadow: 0 0 0 3px rgba(' + self.hexToRgb(color) + ', 0.2) !important; }' +
+            '.stat-value { color: ' + color + ' !important; }' +
+            '.preview-button { background: ' + color + ' !important; }' +
+            '.preview-heart { color: ' + color + ' !important; }' +
+            '#secretLetterButton { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '#wordleReplayButton { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.wordle-btn.hint-btn { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.wordle-btn.continue-btn { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.settings-header h2 i { color: ' + color + ' !important; }' +
+            '.settings-close:hover { color: ' + color + ' !important; }' +
+            '.avatar-customize-section::-webkit-scrollbar-thumb { background: ' + self.lightenColorMethod(color, 40) + ' !important; }' +
+            '.avatar-customize-section::-webkit-scrollbar-thumb:hover { background: ' + color + ' !important; }' +
+            '.heart-decoration { color: ' + color + ' !important; }' +
+            'h1 .heart-icon { color: ' + color + ' !important; }' +
+            '.subtitle span { color: ' + color + ' !important; }' +
+            '.envelope .flap { border-top-color: ' + self.lightenColorMethod(color, 30) + ' !important; }' +
+            '.envelope:hover { box-shadow: 0 8px 25px rgba(' + self.hexToRgb(color) + ', 0.3) !important; }' +
+            '.special-azza-close { background: linear-gradient(135deg, ' + color + ' 0%, ' + lighterColor + ' 100%) !important; }' +
+            '.special-azza-title { color: ' + color + ' !important; }';
+        
+        document.head.appendChild(style);
+    },
+
+    hexToRgb: function(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        if (result) {
+            return parseInt(result[1], 16) + ', ' + parseInt(result[2], 16) + ', ' + parseInt(result[3], 16);
+        }
+        return '255, 107, 129';
     },
 
     lightenColorMethod: function(color, percent) {
@@ -460,6 +602,7 @@ var ProfileManager = {
                     });
                     btn.classList.add('selected');
                     self.updateGenderOptions(btn.dataset.value);
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -474,6 +617,7 @@ var ProfileManager = {
                     card.classList.add('selected');
                     self.avatarConfig.animalType = card.dataset.value;
                     self.renderSetupAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -502,6 +646,7 @@ var ProfileManager = {
                     card.classList.add('selected');
                     self.avatarConfig.outfitStyle = card.dataset.value;
                     self.renderSetupAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -530,6 +675,7 @@ var ProfileManager = {
                     card.classList.add('selected');
                     self.avatarConfig.glasses = card.dataset.value;
                     self.renderSetupAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -545,6 +691,7 @@ var ProfileManager = {
                     card.classList.add('selected');
                     self.avatarConfig.headAccessory = card.dataset.value;
                     self.renderSetupAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -559,6 +706,7 @@ var ProfileManager = {
                     card.classList.add('selected');
                     self.avatarConfig.cheekStyle = card.dataset.value;
                     self.renderSetupAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -621,6 +769,8 @@ var ProfileManager = {
                 if (tabName === 'avatar') {
                     self.renderSettingsAvatar();
                 }
+                
+                self.applyThemeColor(self.themeColor);
             });
         });
 
@@ -648,6 +798,7 @@ var ProfileManager = {
                     self.avatarConfig.gender = btn.dataset.value;
                     self.updateSettingsGenderOptions(btn.dataset.value);
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -662,6 +813,7 @@ var ProfileManager = {
                     option.classList.add('selected');
                     self.avatarConfig.animalType = option.dataset.value;
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -690,6 +842,7 @@ var ProfileManager = {
                     option.classList.add('selected');
                     self.avatarConfig.outfitStyle = option.dataset.value;
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -718,6 +871,7 @@ var ProfileManager = {
                     option.classList.add('selected');
                     self.avatarConfig.glasses = option.dataset.value;
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -733,6 +887,7 @@ var ProfileManager = {
                     option.classList.add('selected');
                     self.avatarConfig.headAccessory = option.dataset.value;
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -747,6 +902,7 @@ var ProfileManager = {
                     option.classList.add('selected');
                     self.avatarConfig.cheekStyle = option.dataset.value;
                     self.renderSettingsAvatar();
+                    self.applyThemeColor(self.themeColor);
                 });
             });
         }
@@ -796,6 +952,7 @@ var ProfileManager = {
             settingsOverlay.style.display = 'flex';
             self.populateSettingsForm();
             self.renderSettingsAvatar();
+            self.applyThemeColor(self.themeColor);
         }
     },
 
@@ -884,6 +1041,10 @@ var ProfileManager = {
             if (previewButton) {
                 previewButton.style.background = color;
             }
+            var previewHeart = previewBox.querySelector('.preview-heart');
+            if (previewHeart) {
+                previewHeart.style.color = color;
+            }
         }
     },
 
@@ -913,6 +1074,7 @@ var ProfileManager = {
 
         self.saveProfile();
         self.updateProfileDisplay();
+        self.applyThemeColor(self.themeColor);
         self.closeSettings();
 
         if (isChangingToAzza(oldFirstName, oldLastName, newFirstName, newLastName)) {
