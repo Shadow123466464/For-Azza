@@ -46,15 +46,24 @@ var ProfileManager = {
             this.syncStreak();
 
             var justCreated = localStorage.getItem('justCreatedProfile');
+            var pendingAzza = localStorage.getItem('pendingAzzaIntro');
+
             if (justCreated === 'true') {
                 localStorage.removeItem('justCreatedProfile');
                 this.hideSetupOverlay();
-                if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
+                this.updateProfileDisplay();
+
+                if (pendingAzza === 'true' && checkIfAzza(this.profile.firstName, this.profile.lastName)) {
+                    localStorage.removeItem('pendingAzzaIntro');
+                    this.showAzzaThenWordle();
+                } else {
                     var mainContent = document.getElementById('mainContent');
                     if (mainContent) mainContent.style.display = 'none';
-                    WordleGame.show();
-                } else {
-                    this.showMainContent();
+                    if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
+                        WordleGame.show();
+                    } else {
+                        this.showMainContent();
+                    }
                 }
             } else {
                 this.showMainContent();
@@ -65,6 +74,26 @@ var ProfileManager = {
             this.applyThemeColor(this.themeColor);
             this.showSetupOverlay();
         }
+    },
+
+    showAzzaThenWordle: function() {
+        var self = this;
+        var mainContent = document.getElementById('mainContent');
+        if (mainContent) mainContent.style.display = 'none';
+
+        showSpecialAzzaPage(this.avatarConfig);
+
+        var closeBtnCheck = setInterval(function() {
+            var overlay = document.getElementById('specialAzzaOverlay');
+            if (!overlay || overlay.style.display === 'none' || !overlay.classList.contains('show')) {
+                clearInterval(closeBtnCheck);
+                if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
+                    WordleGame.show();
+                } else {
+                    self.showMainContent();
+                }
+            }
+        }, 300);
     },
 
     syncStreak: function() {
@@ -334,22 +363,6 @@ var ProfileManager = {
                     }
                 };
 
-                if (checkIfAzza(firstName, lastName)) {
-                    localStorage.setItem('justCreatedProfile', 'true');
-                    self.saveProfile();
-                    self.hideSetupOverlay();
-                    self.updateProfileDisplay();
-                    if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
-                        var mainContent = document.getElementById('mainContent');
-                        if (mainContent) mainContent.style.display = 'none';
-                        WordleGame.show();
-                    } else {
-                        self.showMainContent();
-                    }
-                    showSpecialAzzaPage(self.avatarConfig);
-                    return;
-                }
-
                 self.goToStep(2);
             });
         }
@@ -374,20 +387,27 @@ var ProfileManager = {
         if (finishSetup) {
             finishSetup.addEventListener('click', function() {
                 localStorage.setItem('justCreatedProfile', 'true');
+
+                if (checkIfAzza(self.profile.firstName, self.profile.lastName)) {
+                    localStorage.setItem('pendingAzzaIntro', 'true');
+                } else {
+                    localStorage.removeItem('pendingAzzaIntro');
+                }
+
                 self.saveProfile();
                 self.hideSetupOverlay();
                 self.updateProfileDisplay();
 
-                if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
+                if (checkIfAzza(self.profile.firstName, self.profile.lastName)) {
+                    self.showAzzaThenWordle();
+                } else {
                     var mainContent = document.getElementById('mainContent');
                     if (mainContent) mainContent.style.display = 'none';
-                    WordleGame.show();
-                } else {
-                    self.showMainContent();
-                }
-
-                if (checkIfAzza(self.profile.firstName, self.profile.lastName)) {
-                    showSpecialAzzaPage(self.avatarConfig);
+                    if (typeof WordleGame !== 'undefined' && WordleGame && typeof WordleGame.show === 'function') {
+                        WordleGame.show();
+                    } else {
+                        self.showMainContent();
+                    }
                 }
             });
         }
