@@ -28,16 +28,16 @@ function initMainContent() {
         }
     }
 
-    function updateSecretButtonVisibility() {
-        var secretLetterButton = document.getElementById('secretLetterButton');
-        if (!secretLetterButton) return;
+function updateSecretButtonVisibility() {
+    var secretLetterButton = document.getElementById('secretLetterButton');
+    if (!secretLetterButton) return;
 
-        if (isAzzaProfile()) {
-            secretLetterButton.style.display = 'block';
-        } else {
-            secretLetterButton.style.display = 'none';
-        }
+    if (isAzzaProfile()) {
+        secretLetterButton.classList.add('show');
+    } else {
+        secretLetterButton.classList.remove('show');
     }
+}
 
     function createEnvelopes() {
         if (!envelopesContainer) return;
