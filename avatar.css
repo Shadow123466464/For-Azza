@@ -73,6 +73,12 @@
     overflow: visible;
 }
 
+.animal-face.capybara {
+    width: 105px;
+    height: 95px;
+    border-radius: 50% 50% 48% 48%;
+}
+
 .animal-body-container {
     position: relative;
     width: 100px;
@@ -312,6 +318,32 @@
     transform: translateX(-50%);
 }
 
+.animal-ears.capybara .ear {
+    width: 22px;
+    height: 16px;
+    border-radius: 50% 50% 40% 40%;
+    top: 22px;
+}
+
+.animal-ears.capybara .ear.left {
+    left: 5px;
+    transform: rotate(-25deg);
+}
+
+.animal-ears.capybara .ear.right {
+    right: 5px;
+    transform: rotate(25deg);
+}
+
+.animal-ears.capybara .ear-inner {
+    width: 10px;
+    height: 8px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .face-muzzle {
     position: absolute;
     bottom: 15px;
@@ -327,6 +359,13 @@
 .face-muzzle.bear { width: 55px; height: 40px; }
 .face-muzzle.panda { width: 55px; height: 40px; }
 .face-muzzle.lion { width: 50px; height: 35px; }
+
+.face-muzzle.capybara {
+    width: 70px;
+    height: 38px;
+    border-radius: 35% 35% 50% 50% / 30% 30% 70% 70%;
+    bottom: 8px;
+}
 
 .panda-eye-patches {
     position: absolute;
@@ -357,6 +396,11 @@
     z-index: 15;
 }
 
+.animal-eyes-container.capybara {
+    top: 32%;
+    gap: 30px;
+}
+
 .animal-eye {
     width: 16px;
     height: 16px;
@@ -364,6 +408,11 @@
     border-radius: 50%;
     position: relative;
     overflow: hidden;
+}
+
+.capybara .animal-eye {
+    width: 12px;
+    height: 12px;
 }
 
 .animal-eye-pupil {
@@ -377,6 +426,11 @@
     transform: translate(-50%, -50%);
 }
 
+.capybara .animal-eye-pupil {
+    width: 8px;
+    height: 8px;
+}
+
 .animal-eye-pupil::after {
     content: '';
     position: absolute;
@@ -386,6 +440,13 @@
     border-radius: 50%;
     top: 2px;
     right: 2px;
+}
+
+.capybara .animal-eye-pupil::after {
+    width: 3px;
+    height: 3px;
+    top: 1px;
+    right: 1px;
 }
 
 .animal-eye-lid {
@@ -446,6 +507,36 @@
 .animal-nose.lion { width: 16px; height: 12px; background: #8B4513; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; }
 .animal-nose.wolf { width: 16px; height: 12px; background: #2d2d2d; border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; }
 
+.animal-nose.capybara {
+    width: 22px;
+    height: 14px;
+    background: #4a3728;
+    border-radius: 50% 50% 45% 45% / 50% 50% 50% 50%;
+    bottom: 22px;
+}
+
+.animal-nose.capybara::before {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #3a2a1a;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+}
+
+.animal-nose.capybara::after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #3a2a1a;
+    border-radius: 50%;
+    top: 4px;
+    right: 4px;
+}
+
 .animal-mouth-container {
     position: absolute;
     bottom: 18px;
@@ -454,6 +545,10 @@
     z-index: 15;
     width: 30px;
     height: 15px;
+}
+
+.animal-mouth-container.capybara {
+    bottom: 10px;
 }
 
 .animal-mouth {
@@ -468,6 +563,12 @@
     border-bottom: 3px solid #2d2d2d;
     border-radius: 0 0 20px 20px;
     top: 0;
+}
+
+.capybara .animal-mouth.smile {
+    width: 16px;
+    height: 6px;
+    border-bottom: 2px solid #4a3728;
 }
 
 .animal-avatar.animated {
@@ -499,6 +600,16 @@
 
 .animal-blush-left { left: 8px; }
 .animal-blush-right { right: 8px; }
+
+.capybara .animal-blush-left,
+.capybara .animal-blush-right {
+    top: 45%;
+    width: 14px;
+    height: 8px;
+}
+
+.capybara .animal-blush-left { left: 12px; }
+.capybara .animal-blush-right { right: 12px; }
 
 .animal-freckles {
     position: absolute;
@@ -547,6 +658,19 @@
 .whisker-group.right .whisker:nth-child(2) { transform: rotate(0deg); }
 .whisker-group.right .whisker:nth-child(3) { transform: rotate(-10deg); }
 
+.capybara .animal-whiskers {
+    top: 52%;
+}
+
+.capybara .whisker-group.left { left: -10px; }
+.capybara .whisker-group.right { right: -10px; }
+
+.capybara .whisker {
+    width: 20px;
+    height: 1px;
+    background: #5a4a3a;
+}
+
 .animal-eyelashes {
     position: absolute;
     top: 30%;
@@ -571,6 +695,9 @@
 .animal-eyelashes.left::after { left: 8px; transform: rotate(-15deg); }
 .animal-eyelashes.right::before { right: 2px; transform: rotate(30deg); }
 .animal-eyelashes.right::after { right: 8px; transform: rotate(15deg); }
+
+.capybara .animal-eyelashes.left { left: 20px; top: 28%; }
+.capybara .animal-eyelashes.right { right: 20px; top: 28%; }
 
 .animal-glasses {
     position: absolute;
@@ -1765,6 +1892,149 @@
     transform: translateX(-50%);
 }
 
+.animal-body.king {
+    background: linear-gradient(180deg, #7c2d12 0%, #991b1b 30%, #7f1d1d 100%) !important;
+    border-radius: 38px 38px 22px 22px;
+    border: none;
+    box-shadow: inset 0 8px 20px rgba(255,255,255,0.15), inset 0 -8px 15px rgba(0,0,0,0.2);
+    overflow: visible;
+}
+
+.animal-body.king .king-cape {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 105px;
+    background: linear-gradient(180deg, #7f1d1d 0%, #991b1b 50%, #450a0a 100%);
+    border-radius: 50% 50% 35% 35%;
+    z-index: -1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.animal-body.king .king-cape::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: linear-gradient(90deg, 
+        #f5f5dc 0%, #f5f5dc 8%, #1a1a1a 8%, #1a1a1a 10%,
+        #f5f5dc 10%, #f5f5dc 18%, #1a1a1a 18%, #1a1a1a 20%,
+        #f5f5dc 20%, #f5f5dc 28%, #1a1a1a 28%, #1a1a1a 30%,
+        #f5f5dc 30%, #f5f5dc 38%, #1a1a1a 38%, #1a1a1a 40%,
+        #f5f5dc 40%, #f5f5dc 48%, #1a1a1a 48%, #1a1a1a 50%,
+        #f5f5dc 50%, #f5f5dc 58%, #1a1a1a 58%, #1a1a1a 60%,
+        #f5f5dc 60%, #f5f5dc 68%, #1a1a1a 68%, #1a1a1a 70%,
+        #f5f5dc 70%, #f5f5dc 78%, #1a1a1a 78%, #1a1a1a 80%,
+        #f5f5dc 80%, #f5f5dc 88%, #1a1a1a 88%, #1a1a1a 90%,
+        #f5f5dc 90%, #f5f5dc 100%);
+    border-radius: 0 0 35% 35%;
+}
+
+.animal-body.king .king-ermine-collar {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 22px;
+    background: #f5f5dc;
+    border-radius: 40px 40px 20px 20px;
+    z-index: 2;
+}
+
+.animal-body.king .king-ermine-collar::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    width: 65px;
+    height: 10px;
+    background: repeating-linear-gradient(90deg,
+        transparent 0px, transparent 8px,
+        #1a1a1a 8px, #1a1a1a 12px,
+        transparent 12px, transparent 20px
+    );
+}
+
+.animal-body.king .king-chest-piece {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55px;
+    height: 50px;
+    background: linear-gradient(180deg, #6d28d9 0%, #4c1d95 100%);
+    border-radius: 5px 5px 25px 25px;
+    border: 2px solid #fbbf24;
+    z-index: 1;
+}
+
+.animal-body.king .king-sash {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    width: 70px;
+    height: 12px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    transform: rotate(25deg);
+    border-radius: 6px;
+    z-index: 3;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.animal-body.king .king-medal {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
+    border-radius: 50%;
+    border: 2px solid #92400e;
+    z-index: 4;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.animal-body.king .king-medal::before {
+    content: '♔';
+    position: absolute;
+    font-size: 12px;
+    color: #450a0a;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.animal-body.king .king-belt {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 10px;
+    background: linear-gradient(180deg, #92400e 0%, #78350f 100%);
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.animal-body.king .king-belt::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
+    border: 2px solid #78350f;
+    border-radius: 3px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .settings-avatar-preview {
     width: 160px;
     height: 220px;
@@ -1879,6 +2149,27 @@
 .animal-icon.wolf::before { left: 5px; }
 .animal-icon.wolf::after { right: 5px; }
 
+.animal-icon.capybara {
+    background: linear-gradient(180deg, #a47149 0%, #8b5a3c 100%);
+    border-radius: 45% 45% 50% 50%;
+    width: 42px;
+    height: 38px;
+}
+
+.animal-icon.capybara::before,
+.animal-icon.capybara::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 8px;
+    background: #a47149;
+    border-radius: 50% 50% 40% 40%;
+    top: 3px;
+}
+
+.animal-icon.capybara::before { left: 2px; transform: rotate(-15deg); }
+.animal-icon.capybara::after { right: 2px; transform: rotate(15deg); }
+
 .outfit-icon {
     width: 40px;
     height: 40px;
@@ -1911,162 +2202,40 @@
 .outfit-icon.chef { background: #f3f4f6; border-radius: 18px; }
 .outfit-icon.astronaut { background: linear-gradient(135deg, #f3f4f6 0%, #9ca3af 100%); border-radius: 20px; }
 
-.accessory-icon {
-    width: 35px;
-    height: 25px;
-    margin: 5px auto;
-    position: relative;
-}
-
-.animal-ears.capybara .ear {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    top: 18px;
-}
-
-.animal-ears.capybara .ear.left {
-    left: 18px;
-}
-
-.animal-ears.capybara .ear.right {
-    right: 18px;
-}
-
-.animal-ears.capybara .ear-inner {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.face-muzzle.capybara {
-    width: 62px;
-    height: 42px;
-    border-radius: 48% 48% 52% 52%;
-}
-
-.animal-nose.capybara {
-    width: 16px;
-    height: 12px;
-    background: #5b4636;
-    border-radius: 45% 45% 55% 55%;
-}
-
-.animal-icon.capybara {
-    background: #a47149;
-    border-radius: 45% 45% 50% 50%;
-}
-
-.animal-icon.capybara::before,
-.animal-icon.capybara::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #a47149;
-    border-radius: 50%;
-    top: 2px;
-}
-
-.animal-icon.capybara::before { left: 6px; }
-.animal-icon.capybara::after { right: 6px; }
-
 .outfit-icon.king {
-    background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
-    border-radius: 14px 14px 18px 18px;
+    background: linear-gradient(180deg, #7f1d1d 0%, #991b1b 100%);
+    border-radius: 16px 16px 12px 12px;
     position: relative;
+    overflow: visible;
 }
 
 .outfit-icon.king::before {
     content: '';
     position: absolute;
-    width: 26px;
+    width: 34px;
     height: 8px;
-    background: #fbbf24;
+    background: #f5f5dc;
     border-radius: 4px;
-    top: 8px;
+    top: 3px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .outfit-icon.king::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: #fbbf24;
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    top: -3px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.animal-body.king {
-    background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 55%, #312e81 100%) !important;
-    border-radius: 34px 34px 22px 22px;
-    border: 2px solid #fbbf24;
-    box-shadow: inset 0 10px 16px rgba(255,255,255,0.12), inset 0 -10px 14px rgba(0,0,0,0.14);
-}
-
-.animal-body.king .king-robe {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-}
-
-.animal-body.king .king-collar {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 78px;
-    height: 22px;
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    border-radius: 0 0 18px 18px;
-}
-
-.animal-body.king .king-belt {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 78px;
-    height: 10px;
-    background: #92400e;
-    border-radius: 5px;
-}
-
-.animal-body.king .king-belt::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    background: #fbbf24;
-    border-radius: 3px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.animal-body.king .king-medal {
-    position: absolute;
-    top: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 20px;
-}
-
-.animal-body.king .king-medal::before {
-    content: '👑';
+    content: '♔';
     position: absolute;
     font-size: 16px;
+    color: #fbbf24;
+    bottom: 5px;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+}
+
+.accessory-icon {
+    width: 35px;
+    height: 25px;
+    margin: 5px auto;
+    position: relative;
 }
 
 .accessory-icon.crown {
