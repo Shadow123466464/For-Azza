@@ -52,16 +52,18 @@ function renderAvatar(containerId, config, size, animate) {
     if (size === 'mini') sizeClass = 'mini';
     else if (size === 'small') sizeClass = 'small';
 
+    var animalType = config.animalType || 'cat';
+
     var avatar = document.createElement('div');
     avatar.className = 'animal-avatar ' + sizeClass;
     if (animate) {
         avatar.classList.add('animated');
     }
 
-    var earsHTML = generateEars(config.animalType, furColor, innerEarColor);
-    var muzzleHTML = generateMuzzle(config.animalType, furColor);
-    var specialFeatures = generateSpecialFeatures(config.animalType, furColor);
-    var noseClass = config.animalType;
+    var earsHTML = generateEars(animalType, furColor, innerEarColor);
+    var muzzleHTML = generateMuzzle(animalType, furColor);
+    var specialFeatures = generateSpecialFeatures(animalType, furColor);
+    var noseClass = animalType;
 
     var glassesHTML = '';
     if (config.glasses && config.glasses !== 'none') {
@@ -72,7 +74,7 @@ function renderAvatar(containerId, config, size, animate) {
 
     var cheekHTML = '';
     if (config.cheekStyle && config.cheekStyle !== 'none') {
-        cheekHTML = generateCheeks(config.cheekStyle, config.animalType);
+        cheekHTML = generateCheeks(config.cheekStyle, animalType);
         if (config.cheekStyle === 'blush') {
             avatar.classList.add('blushing');
         }
@@ -84,27 +86,31 @@ function renderAvatar(containerId, config, size, animate) {
     }
 
     var faceColor = furColor;
-    if (config.animalType === 'panda') {
+    if (animalType === 'panda') {
         faceColor = '#f5f5f5';
     }
 
     var maneHTML = '';
-    if (config.animalType === 'lion') {
+    if (animalType === 'lion') {
         maneHTML = specialFeatures;
         specialFeatures = '';
     }
 
     var bodyHTML = generateBody(config.outfitStyle, outfitColor, furColor);
 
+    var faceClass = 'animal-face ' + animalType;
+    var eyesContainerClass = 'animal-eyes-container ' + animalType;
+    var mouthContainerClass = 'animal-mouth-container ' + animalType;
+
     avatar.innerHTML =
         '<div class="animal-head-container">' +
             maneHTML +
             earsHTML +
             accessoryHTML +
-            '<div class="animal-face" style="background:' + faceColor + '">' +
-                (config.animalType === 'panda' ? specialFeatures : '') +
+            '<div class="' + faceClass + '" style="background:' + faceColor + '">' +
+                (animalType === 'panda' ? specialFeatures : '') +
                 muzzleHTML +
-                '<div class="animal-eyes-container">' +
+                '<div class="' + eyesContainerClass + '">' +
                     '<div class="animal-eye"><div class="animal-eye-pupil"></div><div class="animal-eye-lid" style="background:' + faceColor + '"></div></div>' +
                     '<div class="animal-eye"><div class="animal-eye-pupil"></div><div class="animal-eye-lid" style="background:' + faceColor + '"></div></div>' +
                 '</div>' +
@@ -112,8 +118,9 @@ function renderAvatar(containerId, config, size, animate) {
                 '<div class="animal-heart-eyes"><span class="heart">❤️</span><span class="heart">❤️</span></div>' +
                 '<div class="animal-sparkle-eyes"><span class="sparkle">✨</span><span class="sparkle">✨</span></div>' +
                 '<div class="animal-nose ' + noseClass + '"></div>' +
-                '<div class="animal-mouth-container"><div class="animal-mouth smile"></div></div>' +
-                ((config.animalType === 'cat' || config.animalType === 'fox') ? specialFeatures : '') +
+                '<div class="' + mouthContainerClass + '"><div class="animal-mouth smile"></div></div>' +
+                ((animalType === 'cat' || animalType === 'fox' || animalType === 'capybara') ? generateWhiskers(animalType) : '') +
+                ((animalType !== 'cat' && animalType !== 'fox' && animalType !== 'capybara') ? specialFeatures : '') +
                 cheekHTML +
                 glassesHTML +
             '</div>' +
@@ -129,6 +136,14 @@ function renderAvatar(containerId, config, size, animate) {
     if (animate) {
         startAvatarAnimations(avatar);
     }
+}
+
+function generateWhiskers(animalType) {
+    var whiskerClass = animalType === 'capybara' ? 'animal-whiskers capybara' : 'animal-whiskers';
+    return '<div class="' + whiskerClass + '">' +
+        '<div class="whisker-group left"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
+        '<div class="whisker-group right"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
+    '</div>';
 }
 
 function generateEars(animalType, furColor, innerEarColor) {
@@ -187,12 +202,15 @@ function generateEars(animalType, furColor, innerEarColor) {
 }
 
 function generateMuzzle(animalType, furColor) {
-    var lightFur = lightenColor(furColor, 30);
+    var lightFur = lightenColor(furColor, 40);
     var muzzleClass = '';
     if (animalType === 'rabbit' || animalType === 'bear' || animalType === 'panda' || animalType === 'lion' || animalType === 'capybara') {
         muzzleClass = ' ' + animalType;
     }
     var muzzleColor = animalType === 'panda' ? '#f5f5f5' : lightFur;
+    if (animalType === 'capybara') {
+        muzzleColor = lightenColor(furColor, 25);
+    }
     return '<div class="face-muzzle' + muzzleClass + '" style="background:' + muzzleColor + '"></div>';
 }
 
@@ -200,12 +218,6 @@ function generateSpecialFeatures(animalType, furColor) {
     var darkFur = darkenColor(furColor, 20);
 
     switch (animalType) {
-        case 'cat':
-        case 'fox':
-            return '<div class="animal-whiskers">' +
-                '<div class="whisker-group left"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
-                '<div class="whisker-group right"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
-            '</div>';
         case 'panda':
             return '<div class="panda-eye-patches"><div class="eye-patch left"></div><div class="eye-patch right"></div></div>';
         case 'lion':
@@ -222,7 +234,7 @@ function generateCheeks(cheekStyle, animalType) {
         case 'freckles':
             return '<div class="animal-freckles"></div>';
         case 'whiskers':
-            if (animalType !== 'cat' && animalType !== 'fox') {
+            if (animalType !== 'cat' && animalType !== 'fox' && animalType !== 'capybara') {
                 return '<div class="animal-whiskers">' +
                     '<div class="whisker-group left"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
                     '<div class="whisker-group right"><div class="whisker"></div><div class="whisker"></div><div class="whisker"></div></div>' +
@@ -340,7 +352,14 @@ function generateBody(outfitStyle, outfitColor, furColor) {
         case 'astronaut':
             return '<div class="animal-body astronaut"><div class="astronaut-panel"></div><div class="astronaut-patches"></div></div>';
         case 'king':
-            return '<div class="animal-body king"><div class="king-robe"></div><div class="king-collar"></div><div class="king-belt"></div><div class="king-medal"></div></div>';
+            return '<div class="animal-body king">' +
+                '<div class="king-cape"></div>' +
+                '<div class="king-ermine-collar"></div>' +
+                '<div class="king-chest-piece"></div>' +
+                '<div class="king-sash"></div>' +
+                '<div class="king-medal"></div>' +
+                '<div class="king-belt"></div>' +
+            '</div>';
         default:
             return '<div class="animal-body casual" style="background:linear-gradient(135deg,' + outfitColor + ' 0%,' + lighterColor + ' 100%)"></div>';
     }
