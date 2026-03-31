@@ -74,9 +74,10 @@
 }
 
 .animal-face.capybara {
-    width: 105px;
-    height: 95px;
-    border-radius: 50% 50% 48% 48%;
+    width: 100px;
+    height: 90px;
+    border-radius: 48% 48% 45% 45%;
+    top: 25px;
 }
 
 .animal-body-container {
@@ -319,25 +320,25 @@
 }
 
 .animal-ears.capybara .ear {
-    width: 22px;
-    height: 16px;
+    width: 20px;
+    height: 14px;
     border-radius: 50% 50% 40% 40%;
-    top: 22px;
+    top: 28px;
 }
 
 .animal-ears.capybara .ear.left {
-    left: 5px;
-    transform: rotate(-25deg);
+    left: 8px;
+    transform: rotate(-20deg);
 }
 
 .animal-ears.capybara .ear.right {
-    right: 5px;
-    transform: rotate(25deg);
+    right: 8px;
+    transform: rotate(20deg);
 }
 
 .animal-ears.capybara .ear-inner {
     width: 10px;
-    height: 8px;
+    height: 7px;
     border-radius: 50%;
     top: 50%;
     left: 50%;
@@ -361,10 +362,10 @@
 .face-muzzle.lion { width: 50px; height: 35px; }
 
 .face-muzzle.capybara {
-    width: 70px;
-    height: 38px;
-    border-radius: 35% 35% 50% 50% / 30% 30% 70% 70%;
-    bottom: 8px;
+    width: 65px;
+    height: 35px;
+    border-radius: 40% 40% 50% 50% / 35% 35% 65% 65%;
+    bottom: 5px;
 }
 
 .panda-eye-patches {
@@ -397,8 +398,8 @@
 }
 
 .animal-eyes-container.capybara {
-    top: 32%;
-    gap: 30px;
+    top: 30%;
+    gap: 28px;
 }
 
 .animal-eye {
@@ -410,9 +411,9 @@
     overflow: hidden;
 }
 
-.capybara .animal-eye {
-    width: 12px;
-    height: 12px;
+.animal-eyes-container.capybara .animal-eye {
+    width: 11px;
+    height: 11px;
 }
 
 .animal-eye-pupil {
@@ -426,7 +427,7 @@
     transform: translate(-50%, -50%);
 }
 
-.capybara .animal-eye-pupil {
+.animal-eyes-container.capybara .animal-eye-pupil {
     width: 8px;
     height: 8px;
 }
@@ -442,7 +443,7 @@
     right: 2px;
 }
 
-.capybara .animal-eye-pupil::after {
+.animal-eyes-container.capybara .animal-eye-pupil::after {
     width: 3px;
     height: 3px;
     top: 1px;
@@ -508,33 +509,33 @@
 .animal-nose.wolf { width: 16px; height: 12px; background: #2d2d2d; border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%; }
 
 .animal-nose.capybara {
-    width: 22px;
-    height: 14px;
-    background: #4a3728;
-    border-radius: 50% 50% 45% 45% / 50% 50% 50% 50%;
-    bottom: 22px;
+    width: 20px;
+    height: 12px;
+    background: #3d2b1f;
+    border-radius: 50% 50% 40% 40% / 50% 50% 50% 50%;
+    bottom: 18px;
 }
 
 .animal-nose.capybara::before {
     content: '';
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background: #3a2a1a;
+    width: 4px;
+    height: 4px;
+    background: #2a1f15;
     border-radius: 50%;
-    top: 4px;
-    left: 4px;
+    top: 3px;
+    left: 3px;
 }
 
 .animal-nose.capybara::after {
     content: '';
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background: #3a2a1a;
+    width: 4px;
+    height: 4px;
+    background: #2a1f15;
     border-radius: 50%;
-    top: 4px;
-    right: 4px;
+    top: 3px;
+    right: 3px;
 }
 
 .animal-mouth-container {
@@ -548,7 +549,7 @@
 }
 
 .animal-mouth-container.capybara {
-    bottom: 10px;
+    bottom: 8px;
 }
 
 .animal-mouth {
@@ -565,10 +566,10 @@
     top: 0;
 }
 
-.capybara .animal-mouth.smile {
-    width: 16px;
-    height: 6px;
-    border-bottom: 2px solid #4a3728;
+.animal-mouth-container.capybara .animal-mouth.smile {
+    width: 14px;
+    height: 5px;
+    border-bottom: 2px solid #3d2b1f;
 }
 
 .animal-avatar.animated {
@@ -601,15 +602,15 @@
 .animal-blush-left { left: 8px; }
 .animal-blush-right { right: 8px; }
 
-.capybara .animal-blush-left,
-.capybara .animal-blush-right {
-    top: 45%;
-    width: 14px;
-    height: 8px;
+.animal-face.capybara .animal-blush-left,
+.animal-face.capybara .animal-blush-right {
+    top: 42%;
+    width: 12px;
+    height: 7px;
 }
 
-.capybara .animal-blush-left { left: 12px; }
-.capybara .animal-blush-right { right: 12px; }
+.animal-face.capybara .animal-blush-left { left: 10px; }
+.animal-face.capybara .animal-blush-right { right: 10px; }
 
 .animal-freckles {
     position: absolute;
@@ -639,9 +640,16 @@
     z-index: 14;
 }
 
+.animal-whiskers.capybara {
+    top: 48%;
+}
+
 .whisker-group { position: absolute; }
 .whisker-group.left { left: -15px; }
 .whisker-group.right { right: -15px; }
+
+.animal-whiskers.capybara .whisker-group.left { left: -8px; }
+.animal-whiskers.capybara .whisker-group.right { right: -8px; }
 
 .whisker {
     width: 25px;
@@ -651,25 +659,19 @@
     border-radius: 2px;
 }
 
+.animal-whiskers.capybara .whisker {
+    width: 18px;
+    height: 1px;
+    background: #5a4a3a;
+    margin: 3px 0;
+}
+
 .whisker-group.left .whisker:nth-child(1) { transform: rotate(-10deg); }
 .whisker-group.left .whisker:nth-child(2) { transform: rotate(0deg); }
 .whisker-group.left .whisker:nth-child(3) { transform: rotate(10deg); }
 .whisker-group.right .whisker:nth-child(1) { transform: rotate(10deg); }
 .whisker-group.right .whisker:nth-child(2) { transform: rotate(0deg); }
 .whisker-group.right .whisker:nth-child(3) { transform: rotate(-10deg); }
-
-.capybara .animal-whiskers {
-    top: 52%;
-}
-
-.capybara .whisker-group.left { left: -10px; }
-.capybara .whisker-group.right { right: -10px; }
-
-.capybara .whisker {
-    width: 20px;
-    height: 1px;
-    background: #5a4a3a;
-}
 
 .animal-eyelashes {
     position: absolute;
@@ -681,6 +683,9 @@
 
 .animal-eyelashes.left { left: 18px; }
 .animal-eyelashes.right { right: 18px; }
+
+.animal-face.capybara .animal-eyelashes.left { left: 22px; top: 26%; }
+.animal-face.capybara .animal-eyelashes.right { right: 22px; top: 26%; }
 
 .animal-eyelashes::before, .animal-eyelashes::after {
     content: '';
@@ -696,15 +701,16 @@
 .animal-eyelashes.right::before { right: 2px; transform: rotate(30deg); }
 .animal-eyelashes.right::after { right: 8px; transform: rotate(15deg); }
 
-.capybara .animal-eyelashes.left { left: 20px; top: 28%; }
-.capybara .animal-eyelashes.right { right: 20px; top: 28%; }
-
 .animal-glasses {
     position: absolute;
     top: 32%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 25;
+}
+
+.animal-face.capybara .animal-glasses {
+    top: 27%;
 }
 
 .animal-glasses.round {
@@ -2153,7 +2159,7 @@
     background: linear-gradient(180deg, #a47149 0%, #8b5a3c 100%);
     border-radius: 45% 45% 50% 50%;
     width: 42px;
-    height: 38px;
+    height: 36px;
 }
 
 .animal-icon.capybara::before,
@@ -2161,10 +2167,10 @@
     content: '';
     position: absolute;
     width: 10px;
-    height: 8px;
+    height: 7px;
     background: #a47149;
     border-radius: 50% 50% 40% 40%;
-    top: 3px;
+    top: 5px;
 }
 
 .animal-icon.capybara::before { left: 2px; transform: rotate(-15deg); }
