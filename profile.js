@@ -1,7 +1,7 @@
 var ProfileManager = {
     profile: null,
     avatarConfig: {
-        gender: 'girl',
+        gender: 'female',
         animalType: 'cat',
         furColor: 'orange',
         outfitStyle: 'casual',
@@ -28,7 +28,7 @@ var ProfileManager = {
             this.profile = JSON.parse(saved);
             if (this.profile.avatar) {
                 this.avatarConfig = {
-                    gender: this.profile.avatar.gender || 'girl',
+                    gender: this.profile.avatar.gender || 'female',
                     animalType: this.profile.avatar.animalType || 'cat',
                     furColor: this.profile.avatar.furColor || 'orange',
                     outfitStyle: this.profile.avatar.outfitStyle || 'casual',
@@ -53,7 +53,7 @@ var ProfileManager = {
                 this.hideSetupOverlay();
                 this.updateProfileDisplay();
 
-                if (pendingAzza === 'true' && checkIfAzza(this.profile.firstName, this.profile.lastName)) {
+                if (pendingAzza === 'true' && checkIfAzza(this.profile.firstName, this.profile.lastName, this.avatarConfig.gender)) {
                     localStorage.removeItem('pendingAzzaIntro');
                     this.showAzzaThenWordle();
                 } else {
@@ -229,92 +229,92 @@ var ProfileManager = {
         }
     },
 
-updateGenderOptions: function(gender) {
-    this.avatarConfig.gender = gender;
+    updateGenderOptions: function(gender) {
+        this.avatarConfig.gender = gender;
 
-    var setupAccessories = document.getElementById('headAccessoryOptions');
-    if (setupAccessories) {
-        var setupCards = setupAccessories.querySelectorAll('.option-card[data-gender]');
-        for (var i = 0; i < setupCards.length; i++) {
-            var card = setupCards[i];
-            var cardGender = card.dataset.gender;
-            if (cardGender === 'both' || cardGender === gender) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-                if (card.classList.contains('selected')) {
-                    card.classList.remove('selected');
-                    var noneOption = setupAccessories.querySelector('.option-card[data-value="none"]');
-                    if (noneOption) noneOption.classList.add('selected');
-                    this.avatarConfig.headAccessory = 'none';
+        var setupAccessories = document.getElementById('headAccessoryOptions');
+        if (setupAccessories) {
+            var setupCards = setupAccessories.querySelectorAll('.option-card[data-gender]');
+            for (var i = 0; i < setupCards.length; i++) {
+                var card = setupCards[i];
+                var cardGender = card.dataset.gender;
+                if (cardGender === 'both' || cardGender === gender) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                    if (card.classList.contains('selected')) {
+                        card.classList.remove('selected');
+                        var noneOption = setupAccessories.querySelector('.option-card[data-value="none"]');
+                        if (noneOption) noneOption.classList.add('selected');
+                        this.avatarConfig.headAccessory = 'none';
+                    }
                 }
             }
         }
-    }
 
-    var setupOutfits = document.getElementById('outfitStyleOptions');
-    if (setupOutfits) {
-        var outfitCards = setupOutfits.querySelectorAll('.option-card[data-gender]');
-        for (var j = 0; j < outfitCards.length; j++) {
-            var outfitCard = outfitCards[j];
-            var outfitGender = outfitCard.dataset.gender;
-            if (outfitGender === 'both' || outfitGender === gender) {
-                outfitCard.style.display = '';
-            } else {
-                outfitCard.style.display = 'none';
-                if (outfitCard.classList.contains('selected')) {
-                    outfitCard.classList.remove('selected');
-                    var casualOption = setupOutfits.querySelector('.option-card[data-value="casual"]');
-                    if (casualOption) casualOption.classList.add('selected');
-                    this.avatarConfig.outfitStyle = 'casual';
+        var setupOutfits = document.getElementById('outfitStyleOptions');
+        if (setupOutfits) {
+            var outfitCards = setupOutfits.querySelectorAll('.option-card[data-gender]');
+            for (var j = 0; j < outfitCards.length; j++) {
+                var outfitCard = outfitCards[j];
+                var outfitGender = outfitCard.dataset.gender;
+                if (outfitGender === 'both' || outfitGender === gender) {
+                    outfitCard.style.display = '';
+                } else {
+                    outfitCard.style.display = 'none';
+                    if (outfitCard.classList.contains('selected')) {
+                        outfitCard.classList.remove('selected');
+                        var casualOption = setupOutfits.querySelector('.option-card[data-value="casual"]');
+                        if (casualOption) casualOption.classList.add('selected');
+                        this.avatarConfig.outfitStyle = 'casual';
+                    }
                 }
             }
         }
-    }
 
-    var settingsAccessories = document.getElementById('settingsAccessoryOptions');
-    if (settingsAccessories) {
-        var settingsCards = settingsAccessories.querySelectorAll('.scroll-option[data-gender]');
-        for (var k = 0; k < settingsCards.length; k++) {
-            var option = settingsCards[k];
-            var optionGender = option.dataset.gender;
-            if (optionGender === 'both' || optionGender === gender) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-                if (option.classList.contains('selected')) {
-                    option.classList.remove('selected');
-                    var noneOption2 = settingsAccessories.querySelector('.scroll-option[data-value="none"]');
-                    if (noneOption2) noneOption2.classList.add('selected');
-                    this.avatarConfig.headAccessory = 'none';
+        var settingsAccessories = document.getElementById('settingsAccessoryOptions');
+        if (settingsAccessories) {
+            var settingsCards = settingsAccessories.querySelectorAll('.scroll-option[data-gender]');
+            for (var k = 0; k < settingsCards.length; k++) {
+                var option = settingsCards[k];
+                var optionGender = option.dataset.gender;
+                if (optionGender === 'both' || optionGender === gender) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                    if (option.classList.contains('selected')) {
+                        option.classList.remove('selected');
+                        var noneOption2 = settingsAccessories.querySelector('.scroll-option[data-value="none"]');
+                        if (noneOption2) noneOption2.classList.add('selected');
+                        this.avatarConfig.headAccessory = 'none';
+                    }
                 }
             }
         }
-    }
 
-    var settingsOutfits = document.getElementById('settingsOutfitOptions');
-    if (settingsOutfits) {
-        var settingsOutfitCards = settingsOutfits.querySelectorAll('.scroll-option[data-gender]');
-        for (var l = 0; l < settingsOutfitCards.length; l++) {
-            var outfitOption = settingsOutfitCards[l];
-            var outfitOptGender = outfitOption.dataset.gender;
-            if (outfitOptGender === 'both' || outfitOptGender === gender) {
-                outfitOption.style.display = '';
-            } else {
-                outfitOption.style.display = 'none';
-                if (outfitOption.classList.contains('selected')) {
-                    outfitOption.classList.remove('selected');
-                    var casualOption2 = settingsOutfits.querySelector('.scroll-option[data-value="casual"]');
-                    if (casualOption2) casualOption2.classList.add('selected');
-                    this.avatarConfig.outfitStyle = 'casual';
+        var settingsOutfits = document.getElementById('settingsOutfitOptions');
+        if (settingsOutfits) {
+            var settingsOutfitCards = settingsOutfits.querySelectorAll('.scroll-option[data-gender]');
+            for (var l = 0; l < settingsOutfitCards.length; l++) {
+                var outfitOption = settingsOutfitCards[l];
+                var outfitOptGender = outfitOption.dataset.gender;
+                if (outfitOptGender === 'both' || outfitOptGender === gender) {
+                    outfitOption.style.display = '';
+                } else {
+                    outfitOption.style.display = 'none';
+                    if (outfitOption.classList.contains('selected')) {
+                        outfitOption.classList.remove('selected');
+                        var casualOption2 = settingsOutfits.querySelector('.scroll-option[data-value="casual"]');
+                        if (casualOption2) casualOption2.classList.add('selected');
+                        this.avatarConfig.outfitStyle = 'casual';
+                    }
                 }
             }
         }
-    }
 
-    this.renderSetupAvatar();
-    this.updateProfileDisplay();
-},
+        this.renderSetupAvatar();
+        this.updateProfileDisplay();
+    },
 
     applyThemeColor: function(color) {
         this.themeColor = color;
@@ -428,7 +428,7 @@ updateGenderOptions: function(gender) {
             finishSetup.addEventListener('click', function() {
                 localStorage.setItem('justCreatedProfile', 'true');
 
-                if (checkIfAzza(self.profile.firstName, self.profile.lastName)) {
+                if (checkIfAzza(self.profile.firstName, self.profile.lastName, self.avatarConfig.gender)) {
                     localStorage.setItem('pendingAzzaIntro', 'true');
                 } else {
                     localStorage.removeItem('pendingAzzaIntro');
@@ -438,7 +438,7 @@ updateGenderOptions: function(gender) {
                 self.hideSetupOverlay();
                 self.updateProfileDisplay();
 
-                if (checkIfAzza(self.profile.firstName, self.profile.lastName)) {
+                if (checkIfAzza(self.profile.firstName, self.profile.lastName, self.avatarConfig.gender)) {
                     self.showAzzaThenWordle();
                 } else {
                     var mainContent = document.getElementById('mainContent');
@@ -478,6 +478,7 @@ updateGenderOptions: function(gender) {
         });
 
         this.bindSetupSelection('outfitStyleOptions', '.option-card', function(card, container) {
+            if (card.style.display === 'none') return;
             var cards = container.querySelectorAll('.option-card');
             for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
             card.classList.add('selected');
@@ -633,6 +634,7 @@ updateGenderOptions: function(gender) {
         });
 
         this.bindSettingsSelection('settingsOutfitOptions', '.scroll-option', function(option, container) {
+            if (option.style.display === 'none') return;
             var items = container.querySelectorAll('.scroll-option');
             for (var i = 0; i < items.length; i++) items[i].classList.remove('selected');
             option.classList.add('selected');
@@ -709,47 +711,47 @@ updateGenderOptions: function(gender) {
         }
     },
 
-updateSettingsGenderOptions: function(gender) {
-    var settingsAccessoryOptions = document.getElementById('settingsAccessoryOptions');
-    if (settingsAccessoryOptions) {
-        var options = settingsAccessoryOptions.querySelectorAll('.scroll-option[data-gender]');
-        for (var i = 0; i < options.length; i++) {
-            var option = options[i];
-            var optionGender = option.dataset.gender;
-            if (optionGender === 'both' || optionGender === gender) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-                if (option.classList.contains('selected')) {
-                    option.classList.remove('selected');
-                    var noneOption = settingsAccessoryOptions.querySelector('.scroll-option[data-value="none"]');
-                    if (noneOption) noneOption.classList.add('selected');
-                    this.avatarConfig.headAccessory = 'none';
+    updateSettingsGenderOptions: function(gender) {
+        var settingsAccessoryOptions = document.getElementById('settingsAccessoryOptions');
+        if (settingsAccessoryOptions) {
+            var options = settingsAccessoryOptions.querySelectorAll('.scroll-option[data-gender]');
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                var optionGender = option.dataset.gender;
+                if (optionGender === 'both' || optionGender === gender) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                    if (option.classList.contains('selected')) {
+                        option.classList.remove('selected');
+                        var noneOption = settingsAccessoryOptions.querySelector('.scroll-option[data-value="none"]');
+                        if (noneOption) noneOption.classList.add('selected');
+                        this.avatarConfig.headAccessory = 'none';
+                    }
                 }
             }
         }
-    }
 
-    var settingsOutfitOptions = document.getElementById('settingsOutfitOptions');
-    if (settingsOutfitOptions) {
-        var outfitOptions = settingsOutfitOptions.querySelectorAll('.scroll-option[data-gender]');
-        for (var j = 0; j < outfitOptions.length; j++) {
-            var outfit = outfitOptions[j];
-            var outfitGender = outfit.dataset.gender;
-            if (outfitGender === 'both' || outfitGender === gender) {
-                outfit.style.display = '';
-            } else {
-                outfit.style.display = 'none';
-                if (outfit.classList.contains('selected')) {
-                    outfit.classList.remove('selected');
-                    var casual = settingsOutfitOptions.querySelector('.scroll-option[data-value="casual"]');
-                    if (casual) casual.classList.add('selected');
-                    this.avatarConfig.outfitStyle = 'casual';
+        var settingsOutfitOptions = document.getElementById('settingsOutfitOptions');
+        if (settingsOutfitOptions) {
+            var outfitOptions = settingsOutfitOptions.querySelectorAll('.scroll-option[data-gender]');
+            for (var j = 0; j < outfitOptions.length; j++) {
+                var outfit = outfitOptions[j];
+                var outfitGender = outfit.dataset.gender;
+                if (outfitGender === 'both' || outfitGender === gender) {
+                    outfit.style.display = '';
+                } else {
+                    outfit.style.display = 'none';
+                    if (outfit.classList.contains('selected')) {
+                        outfit.classList.remove('selected');
+                        var casual = settingsOutfitOptions.querySelector('.scroll-option[data-value="casual"]');
+                        if (casual) casual.classList.add('selected');
+                        this.avatarConfig.outfitStyle = 'casual';
+                    }
                 }
             }
         }
-    }
-},
+    },
 
     openSettings: function() {
         var overlay = document.getElementById('settingsOverlay');
@@ -852,6 +854,7 @@ updateSettingsGenderOptions: function(gender) {
 
         var oldFirstName = this.profile ? this.profile.firstName : '';
         var oldLastName = this.profile ? this.profile.lastName : '';
+        var oldGender = this.profile && this.profile.avatar ? this.profile.avatar.gender : 'female';
 
         this.profile.firstName = newFirstName;
         this.profile.lastName = newLastName;
@@ -863,7 +866,7 @@ updateSettingsGenderOptions: function(gender) {
         this.applyThemeColor(this.themeColor);
         this.closeSettings();
 
-        if (isChangingToAzza(oldFirstName, oldLastName, newFirstName, newLastName)) {
+        if (isChangingToAzza(oldFirstName, oldLastName, oldGender, newFirstName, newLastName, this.avatarConfig.gender)) {
             showSpecialAzzaPage(this.avatarConfig);
         }
     }
