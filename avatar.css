@@ -88,6 +88,14 @@
     z-index: 3;
 }
 
+.animal-body-container.boy {
+    width: 110px;
+}
+
+.animal-body-container.girl {
+    width: 100px;
+}
+
 .animal-neck {
     width: 40px;
     height: 25px;
@@ -97,6 +105,10 @@
     transform: translateX(-50%);
     border-radius: 0 0 20px 20px;
     z-index: 4;
+}
+
+.animal-body-container.boy .animal-neck {
+    width: 45px;
 }
 
 .animal-body {
@@ -109,6 +121,18 @@
     border-radius: 45px 45px 25px 25px;
     z-index: 3;
     overflow: hidden;
+}
+
+.animal-body.boy {
+    width: 105px;
+    height: 95px;
+    border-radius: 35px 35px 20px 20px;
+}
+
+.animal-body.girl {
+    width: 95px;
+    height: 95px;
+    border-radius: 42px 42px 30px 30px;
 }
 
 .animal-ears {
@@ -270,6 +294,10 @@
     z-index: 6;
 }
 
+.animal-avatar.boy .animal-ears.lion .ear {
+    top: 20px;
+}
+
 .animal-ears.lion .ear.left { left: 10px; }
 .animal-ears.lion .ear.right { right: 10px; }
 
@@ -291,6 +319,10 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
+}
+
+.animal-avatar.girl .lion-mane {
+    display: none;
 }
 
 .animal-ears.wolf .ear {
@@ -1195,12 +1227,24 @@
     transform: translateX(-50%);
 }
 
-.animal-body.casual {
-    border-radius: 40px 40px 20px 20px;
+.animal-body.casual.boy {
+    border-radius: 35px 35px 18px 18px;
+    width: 105px;
 }
 
-.animal-body.formal {
+.animal-body.casual.girl {
+    border-radius: 45px 45px 28px 28px;
+    width: 90px;
+}
+
+.animal-body.formal.boy {
     border-radius: 30px 30px 15px 15px;
+    width: 105px;
+}
+
+.animal-body.formal.girl {
+    border-radius: 38px 38px 25px 25px;
+    width: 88px;
 }
 
 .animal-body.formal .formal-collar {
@@ -1223,8 +1267,25 @@
     clip-path: polygon(50% 0%, 100% 15%, 80% 100%, 20% 100%, 0% 15%);
 }
 
-.animal-body.sporty {
-    border-radius: 45px 45px 20px 20px;
+.animal-body.formal .formal-neckline {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    border-radius: 0 0 50% 50%;
+    background: rgba(255,255,255,0.3);
+}
+
+.animal-body.sporty.boy {
+    border-radius: 35px 35px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.sporty.girl {
+    border-radius: 45px 45px 25px 25px;
+    width: 90px;
 }
 
 .animal-body.sporty .sporty-stripe {
@@ -1237,8 +1298,25 @@
     border-radius: 3px;
 }
 
-.animal-body.cozy {
-    border-radius: 50px 50px 25px 25px;
+.animal-body.sporty .sporty-number {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Arial Black', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.9);
+}
+
+.animal-body.cozy.boy {
+    border-radius: 40px 40px 20px 20px;
+    width: 105px;
+}
+
+.animal-body.cozy.girl {
+    border-radius: 50px 50px 30px 30px;
+    width: 90px;
 }
 
 .animal-body.cozy .cozy-collar {
@@ -1251,8 +1329,14 @@
     border-radius: 30px 30px 0 0;
 }
 
-.animal-body.hoodie {
-    border-radius: 45px 45px 20px 20px;
+.animal-body.hoodie.boy {
+    border-radius: 38px 38px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.hoodie.girl {
+    border-radius: 45px 45px 25px 25px;
+    width: 90px;
 }
 
 .animal-body.hoodie .hoodie-pocket {
@@ -1287,8 +1371,14 @@
 .animal-body.hoodie .hoodie-strings::before { left: 5px; }
 .animal-body.hoodie .hoodie-strings::after { right: 5px; }
 
-.animal-body.sweater {
-    border-radius: 45px 45px 22px 22px;
+.animal-body.sweater.boy {
+    border-radius: 38px 38px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.sweater.girl {
+    border-radius: 45px 45px 25px 25px;
+    width: 90px;
 }
 
 .animal-body.sweater .sweater-pattern {
@@ -1301,9 +1391,10 @@
     background: repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px);
 }
 
-.animal-body.dress {
-    border-radius: 35px 35px 45px 45px;
+.animal-body.dress.girl {
+    border-radius: 35px 35px 50px 50px;
     height: 100px;
+    width: 95px;
 }
 
 .animal-body.dress .dress-ribbon {
@@ -1316,8 +1407,9 @@
     border-radius: 4px;
 }
 
-.animal-body.suit {
+.animal-body.suit.boy {
     border-radius: 30px 30px 15px 15px;
+    width: 105px;
 }
 
 .animal-body.suit .suit-lapel {
@@ -1353,8 +1445,30 @@
     clip-path: polygon(50% 0%, 100% 10%, 70% 100%, 30% 100%, 0% 10%);
 }
 
-.animal-body.summer {
-    border-radius: 40px 40px 25px 25px;
+.animal-body.suit-female.girl {
+    border-radius: 35px 35px 25px 25px;
+    width: 88px;
+}
+
+.animal-body.suit-female .suit-female-lapel {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 25px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 0 0 50% 50%;
+}
+
+.animal-body.summer.boy {
+    border-radius: 35px 35px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.summer.girl {
+    border-radius: 42px 42px 28px 28px;
+    width: 88px;
 }
 
 .animal-body.summer .summer-pattern {
@@ -1367,8 +1481,14 @@
     border-radius: inherit;
 }
 
-.animal-body.winter {
-    border-radius: 48px 48px 20px 20px;
+.animal-body.winter.boy {
+    border-radius: 40px 40px 18px 18px;
+    width: 108px;
+}
+
+.animal-body.winter.girl {
+    border-radius: 48px 48px 25px 25px;
+    width: 92px;
 }
 
 .animal-body.winter .winter-scarf {
@@ -1406,9 +1526,16 @@
 .animal-body.winter .winter-buttons::before { top: 0; }
 .animal-body.winter .winter-buttons::after { top: 20px; }
 
-.animal-body.sailor {
-    border-radius: 35px 35px 18px 18px;
+.animal-body.sailor.boy {
+    border-radius: 32px 32px 15px 15px;
     background: white !important;
+    width: 105px;
+}
+
+.animal-body.sailor.girl {
+    border-radius: 38px 38px 22px 22px;
+    background: white !important;
+    width: 88px;
 }
 
 .animal-body.sailor .sailor-collar {
@@ -1434,8 +1561,14 @@
     border-top: 25px solid #ef4444;
 }
 
-.animal-body.overalls {
-    border-radius: 40px 40px 20px 20px;
+.animal-body.overalls.boy {
+    border-radius: 35px 35px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.overalls.girl {
+    border-radius: 42px 42px 25px 25px;
+    width: 88px;
 }
 
 .animal-body.overalls .overalls-straps {
@@ -1468,10 +1601,18 @@
     border-radius: 0 0 8px 8px;
 }
 
-.animal-body.knight {
+.animal-body.knight.boy {
     background: linear-gradient(135deg, #9ca3af 0%, #6b7280 50%, #4b5563 100%) !important;
-    border-radius: 35px 35px 15px 15px;
+    border-radius: 32px 32px 15px 15px;
     border: 3px solid #374151;
+    width: 108px;
+}
+
+.animal-body.knight.girl {
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 50%, #4b5563 100%) !important;
+    border-radius: 38px 38px 20px 20px;
+    border: 3px solid #374151;
+    width: 92px;
 }
 
 .animal-body.knight .knight-armor {
@@ -1515,10 +1656,11 @@
     border-radius: 3px;
 }
 
-.animal-body.princess {
+.animal-body.princess.girl {
     background: linear-gradient(135deg, #f0abfc 0%, #e879f9 50%, #d946ef 100%) !important;
-    border-radius: 30px 30px 50px 50px;
+    border-radius: 30px 30px 55px 55px;
     height: 100px;
+    width: 100px;
 }
 
 .animal-body.princess .princess-bodice {
@@ -1526,10 +1668,10 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 55px;
     height: 35px;
     background: linear-gradient(135deg, #fdf4ff 0%, #f0abfc 100%);
-    border-radius: 30px 30px 0 0;
+    border-radius: 25px 25px 0 0;
 }
 
 .animal-body.princess .princess-gems {
@@ -1554,15 +1696,128 @@
     top: 30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
+    width: 75px;
     height: 8px;
     background: #fbbf24;
     border-radius: 4px;
 }
 
-.animal-body.pirate {
+.animal-body.prince.boy {
+    background: linear-gradient(180deg, #1e3a5f 0%, #2563eb 50%, #1e40af 100%) !important;
+    border-radius: 32px 32px 18px 18px;
+    width: 108px;
+    box-shadow: inset 0 8px 20px rgba(255,255,255,0.15), inset 0 -8px 15px rgba(0,0,0,0.2);
+    overflow: visible;
+}
+
+.animal-body.prince .prince-cape {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 118px;
+    height: 105px;
+    background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 50%, #172554 100%);
+    border-radius: 50% 50% 35% 35%;
+    z-index: -1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.animal-body.prince .prince-collar {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: #fbbf24;
+    border-radius: 40px 40px 20px 20px;
+    z-index: 2;
+}
+
+.animal-body.prince .prince-chest {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 45px;
+    background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+    border-radius: 5px 5px 20px 20px;
+    border: 2px solid #fbbf24;
+    z-index: 1;
+}
+
+.animal-body.prince .prince-sash {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 68px;
+    height: 10px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    transform: rotate(25deg);
+    border-radius: 5px;
+    z-index: 3;
+}
+
+.animal-body.prince .prince-medal {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
+    border-radius: 50%;
+    border: 2px solid #92400e;
+    z-index: 4;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.animal-body.prince .prince-medal::before {
+    content: '⚜️';
+    position: absolute;
+    font-size: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.animal-body.prince .prince-belt {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78px;
+    height: 10px;
+    background: linear-gradient(180deg, #92400e 0%, #78350f 100%);
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.animal-body.prince .prince-belt::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
+    border: 2px solid #78350f;
+    border-radius: 3px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.animal-body.pirate.boy {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
-    border-radius: 35px 35px 18px 18px;
+    border-radius: 32px 32px 15px 15px;
+    width: 108px;
+}
+
+.animal-body.pirate.girl {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+    border-radius: 38px 38px 22px 22px;
+    width: 88px;
 }
 
 .animal-body.pirate .pirate-vest {
@@ -1598,18 +1853,16 @@
     border-radius: 3px;
 }
 
-.animal-body.wizard {
+.animal-body.wizard.boy {
     background: linear-gradient(135deg, #4338ca 0%, #3730a3 50%, #312e81 100%) !important;
-    border-radius: 35px 35px 25px 25px;
+    border-radius: 32px 32px 20px 20px;
+    width: 108px;
 }
 
-.animal-body.wizard .wizard-robe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
+.animal-body.wizard.girl {
+    background: linear-gradient(135deg, #4338ca 0%, #3730a3 50%, #312e81 100%) !important;
+    border-radius: 38px 38px 28px 28px;
+    width: 90px;
 }
 
 .animal-body.wizard .wizard-stars {
@@ -1640,18 +1893,10 @@
     border-radius: 4px;
 }
 
-.animal-body.fairy {
+.animal-body.fairy.girl {
     background: linear-gradient(135deg, #fbcfe8 0%, #f9a8d4 50%, #f472b6 100%) !important;
-    border-radius: 30px 30px 40px 40px;
-}
-
-.animal-body.fairy .fairy-dress {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
+    border-radius: 30px 30px 45px 45px;
+    width: 95px;
 }
 
 .animal-body.fairy .fairy-wings {
@@ -1686,9 +1931,45 @@
     transform: translateX(-50%);
 }
 
-.animal-body.santa {
+.animal-body.elf.boy {
+    background: linear-gradient(135deg, #166534 0%, #15803d 50%, #14532d 100%) !important;
+    border-radius: 32px 32px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.elf .elf-tunic {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(180deg, #15803d 0%, #14532d 100%);
+    border-radius: 5px 5px 20px 20px;
+    border: 2px solid #a3e635;
+}
+
+.animal-body.elf .elf-belt {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 8px;
+    background: #92400e;
+    border-radius: 4px;
+}
+
+.animal-body.santa.boy {
     background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
-    border-radius: 45px 45px 20px 20px;
+    border-radius: 38px 38px 18px 18px;
+    width: 108px;
+}
+
+.animal-body.santa.girl {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border-radius: 45px 45px 25px 25px;
+    width: 92px;
 }
 
 .animal-body.santa .santa-fur {
@@ -1725,9 +2006,16 @@
     border-radius: 3px;
 }
 
-.animal-body.vampire {
+.animal-body.vampire.boy {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
-    border-radius: 35px 35px 18px 18px;
+    border-radius: 32px 32px 15px 15px;
+    width: 108px;
+}
+
+.animal-body.vampire.girl {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+    border-radius: 38px 38px 22px 22px;
+    width: 88px;
 }
 
 .animal-body.vampire .vampire-cape {
@@ -1735,7 +2023,7 @@
     top: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 110px;
+    width: 115px;
     height: 100px;
     background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
     border-radius: 50% 50% 30% 30%;
@@ -1767,9 +2055,10 @@
     font-size: 16px;
 }
 
-.animal-body.maid {
+.animal-body.maid.girl {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
-    border-radius: 30px 30px 40px 40px;
+    border-radius: 30px 30px 45px 45px;
+    width: 92px;
 }
 
 .animal-body.maid .maid-apron {
@@ -1794,9 +2083,16 @@
     border-radius: 5px;
 }
 
-.animal-body.butler {
+.animal-body.butler.boy {
     background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
     border-radius: 30px 30px 15px 15px;
+    width: 105px;
+}
+
+.animal-body.butler.girl {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+    border-radius: 35px 35px 22px 22px;
+    width: 88px;
 }
 
 .animal-body.butler .butler-vest {
@@ -1835,8 +2131,14 @@
 .animal-body.butler .butler-bowtie::before { left: -8px; }
 .animal-body.butler .butler-bowtie::after { right: -8px; }
 
-.animal-body.chef {
-    border-radius: 40px 40px 20px 20px;
+.animal-body.chef.boy {
+    border-radius: 35px 35px 18px 18px;
+    width: 105px;
+}
+
+.animal-body.chef.girl {
+    border-radius: 42px 42px 25px 25px;
+    width: 88px;
 }
 
 .animal-body.chef .chef-buttons {
@@ -1863,10 +2165,18 @@
 .animal-body.chef .chef-buttons::before { top: 0; }
 .animal-body.chef .chef-buttons::after { top: 20px; }
 
-.animal-body.astronaut {
+.animal-body.astronaut.boy {
     background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 50%, #9ca3af 100%) !important;
-    border-radius: 45px 45px 20px 20px;
+    border-radius: 38px 38px 18px 18px;
     border: 3px solid #6b7280;
+    width: 108px;
+}
+
+.animal-body.astronaut.girl {
+    background: linear-gradient(135deg, #f3f4f6 0%, #d1d5db 50%, #9ca3af 100%) !important;
+    border-radius: 45px 45px 22px 22px;
+    border: 3px solid #6b7280;
+    width: 92px;
 }
 
 .animal-body.astronaut .astronaut-panel {
@@ -1898,12 +2208,13 @@
     transform: translateX(-50%);
 }
 
-.animal-body.king {
+.animal-body.king.boy {
     background: linear-gradient(180deg, #7c2d12 0%, #991b1b 30%, #7f1d1d 100%) !important;
-    border-radius: 38px 38px 22px 22px;
+    border-radius: 35px 35px 18px 18px;
     border: none;
     box-shadow: inset 0 8px 20px rgba(255,255,255,0.15), inset 0 -8px 15px rgba(0,0,0,0.2);
     overflow: visible;
+    width: 110px;
 }
 
 .animal-body.king .king-cape {
@@ -1911,7 +2222,7 @@
     top: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 120px;
+    width: 125px;
     height: 105px;
     background: linear-gradient(180deg, #7f1d1d 0%, #991b1b 50%, #450a0a 100%);
     border-radius: 50% 50% 35% 35%;
@@ -1945,7 +2256,7 @@
     top: -2px;
     left: 50%;
     transform: translateX(-50%);
-    width: 85px;
+    width: 88px;
     height: 22px;
     background: #f5f5dc;
     border-radius: 40px 40px 20px 20px;
@@ -1957,7 +2268,7 @@
     position: absolute;
     top: 6px;
     left: 10px;
-    width: 65px;
+    width: 68px;
     height: 10px;
     background: repeating-linear-gradient(90deg,
         transparent 0px, transparent 8px,
@@ -1971,7 +2282,7 @@
     top: 18px;
     left: 50%;
     transform: translateX(-50%);
-    width: 55px;
+    width: 58px;
     height: 50px;
     background: linear-gradient(180deg, #6d28d9 0%, #4c1d95 100%);
     border-radius: 5px 5px 25px 25px;
@@ -1982,8 +2293,8 @@
 .animal-body.king .king-sash {
     position: absolute;
     top: 20px;
-    left: 15px;
-    width: 70px;
+    left: 18px;
+    width: 72px;
     height: 12px;
     background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     transform: rotate(25deg);
@@ -1997,8 +2308,8 @@
     top: 35px;
     left: 50%;
     transform: translateX(-50%);
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
     border-radius: 50%;
     border: 2px solid #92400e;
@@ -2009,7 +2320,7 @@
 .animal-body.king .king-medal::before {
     content: '♔';
     position: absolute;
-    font-size: 12px;
+    font-size: 14px;
     color: #450a0a;
     left: 50%;
     top: 50%;
@@ -2021,7 +2332,7 @@
     bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
+    width: 85px;
     height: 10px;
     background: linear-gradient(180deg, #92400e 0%, #78350f 100%);
     border-radius: 5px;
@@ -2031,14 +2342,110 @@
 .animal-body.king .king-belt::after {
     content: '';
     position: absolute;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #b45309 100%);
     border: 2px solid #78350f;
     border-radius: 3px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.animal-body.queen.girl {
+    background: linear-gradient(180deg, #7c2d12 0%, #991b1b 30%, #7f1d1d 100%) !important;
+    border-radius: 32px 32px 50px 50px;
+    height: 100px;
+    width: 100px;
+    box-shadow: inset 0 8px 20px rgba(255,255,255,0.15), inset 0 -8px 15px rgba(0,0,0,0.2);
+    overflow: visible;
+}
+
+.animal-body.queen .queen-cape {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 115px;
+    height: 110px;
+    background: linear-gradient(180deg, #7f1d1d 0%, #991b1b 50%, #450a0a 100%);
+    border-radius: 50% 50% 40% 40%;
+    z-index: -1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.animal-body.queen .queen-cape::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(90deg, 
+        #f5f5dc 0%, #f5f5dc 10%, #1a1a1a 10%, #1a1a1a 12%,
+        #f5f5dc 12%, #f5f5dc 22%, #1a1a1a 22%, #1a1a1a 24%,
+        #f5f5dc 24%, #f5f5dc 34%, #1a1a1a 34%, #1a1a1a 36%,
+        #f5f5dc 36%, #f5f5dc 46%, #1a1a1a 46%, #1a1a1a 48%,
+        #f5f5dc 48%, #f5f5dc 58%, #1a1a1a 58%, #1a1a1a 60%,
+        #f5f5dc 60%, #f5f5dc 70%, #1a1a1a 70%, #1a1a1a 72%,
+        #f5f5dc 72%, #f5f5dc 82%, #1a1a1a 82%, #1a1a1a 84%,
+        #f5f5dc 84%, #f5f5dc 100%);
+    border-radius: 0 0 40% 40%;
+}
+
+.animal-body.queen .queen-collar {
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75px;
+    height: 18px;
+    background: #f5f5dc;
+    border-radius: 40px 40px 20px 20px;
+    z-index: 2;
+}
+
+.animal-body.queen .queen-bodice {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 40px;
+    background: linear-gradient(180deg, #6d28d9 0%, #4c1d95 100%);
+    border-radius: 20px 20px 30px 30px;
+    border: 2px solid #fbbf24;
+    z-index: 1;
+}
+
+.animal-body.queen .queen-gems {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 20px;
+    z-index: 3;
+}
+
+.animal-body.queen .queen-gems::before {
+    content: '💎';
+    position: absolute;
+    font-size: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.animal-body.queen .queen-sash {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 8px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 4px;
+    z-index: 2;
 }
 
 .settings-avatar-preview {
